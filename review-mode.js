@@ -25,7 +25,7 @@ import {
   getDatabase, ref, push, update, remove, onValue
 } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js';
 import {
-  getAuth, onAuthStateChanged
+  getAuth, onAuthStateChanged, signInAnonymously
 } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
 // ============================================================
@@ -352,13 +352,24 @@ async function initRtdb() {
     // Wait for the modular Auth to read the persisted session (set by
     // auth-gate.js's v9 compat SDK; the two share the same IndexedDB store
     // keyed by authDomain).
-    const user = await new Promise((resolve) => {
+    let user = await new Promise((resolve) => {
       const unsub = onAuthStateChanged(auth, (u) => { unsub(); resolve(u); });
     });
     if (!user) {
-      state.db = null;
-      showToast(state.LABELS.errorPrefix + 'not-signed-in');
-      return false;
+      // Touching-lives variation (2026-07-01): no auth-gate on this surface,
+      // so if no persisted user is signed in, fall back to anonymous auth.
+      // Every reviewer gets a stable UID (persisted per-browser) without a
+      // login step. Enable "Anonymous" in Firebase Console → Authentication
+      // → Sign-in method. Documented in .composition-manifest.md §"TL variations".
+      try {
+        const cred = await signInAnonymously(auth);
+        user = cred.user;
+      } catch (err) {
+        state.db = null;
+        showToast(state.LABELS.errorPrefix +
+          'anonymous sign-in disabled — enable it in Firebase Console → Authentication → Sign-in method');
+        return false;
+      }
     }
     state.db = getDatabase(app);
     return true;
