@@ -19,6 +19,30 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .review-widget-hint{background:#e8f4ff;border:1px solid #99c7f0;padding:10px 14px;border-radius:6px;margin:16px 0;font-size:13px;color:#143866}
 .review-widget-hint code{background:#d6e6f5;padding:1px 4px;border-radius:3px}
 
+/* Run strip (Started · Paused · N days) shown on each card */
+.run-strip{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:6px 14px;background:#fafbfc;border-top:1px solid var(--border);border-bottom:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.4}
+.run-strip.run-strip-compact{padding:4px 0;background:transparent;border:0}
+.run-strip .run-label{text-transform:uppercase;letter-spacing:.04em;font-weight:600;color:#8e9299}
+.run-strip .run-date{color:#1f2330;font-variant-numeric:tabular-nums}
+.days-chip{display:inline-block;padding:2px 8px;border-radius:999px;background:#eaf3fb;color:#084874;font-weight:700;font-size:11px;letter-spacing:.02em}
+.days-chip.days-chip-paused{background:var(--paused);color:var(--paused-text)}
+.days-chip.days-chip-coming{background:var(--coming);color:var(--coming-text)}
+
+/* Global filter bar (status pills + date-range pills + custom date inputs) */
+.filter-bar{background:#fff;border-bottom:1px solid var(--border);padding:12px 32px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;position:sticky;top:0;z-index:9;font-size:13px}
+.filter-bar .filter-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.filter-bar .filter-label{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+.filter-bar .pill{background:#f0f2f5;border:1px solid transparent;color:#1f2330;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:600;cursor:pointer;transition:background .12s,border-color .12s,color .12s;font-family:inherit;line-height:1.4}
+.filter-bar .pill:hover{background:#e4e6eb}
+.filter-bar .pill.on{background:#084874;color:#fff;border-color:#084874}
+.filter-bar .pill.on:hover{background:#053454}
+.filter-bar .custom-range{display:none;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+.filter-bar .custom-range.open{display:inline-flex}
+.filter-bar .custom-range input[type="date"]{border:1px solid var(--border);border-radius:6px;padding:3px 6px;font:12px inherit;color:#1f2330}
+.filter-bar .filter-clear{color:var(--muted);font-size:11px;cursor:pointer;text-decoration:underline;margin-left:auto}
+.filter-bar .filter-clear:hover{color:#1f2330}
+.hidden-by-filter{display:none !important}
+
 /* Variant switcher (Credo-shape dirbar) */
 .dirbar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#f7f8fa;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-wrap:wrap;font-size:12px}
 .dirbar .dirlbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}

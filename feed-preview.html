@@ -19,6 +19,30 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .review-widget-hint{background:#e8f4ff;border:1px solid #99c7f0;padding:10px 14px;border-radius:6px;margin:16px 0;font-size:13px;color:#143866}
 .review-widget-hint code{background:#d6e6f5;padding:1px 4px;border-radius:3px}
 
+/* Run strip (Started · Paused · N days) shown on each card */
+.run-strip{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:6px 14px;background:#fafbfc;border-top:1px solid var(--border);border-bottom:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.4}
+.run-strip.run-strip-compact{padding:4px 0;background:transparent;border:0}
+.run-strip .run-label{text-transform:uppercase;letter-spacing:.04em;font-weight:600;color:#8e9299}
+.run-strip .run-date{color:#1f2330;font-variant-numeric:tabular-nums}
+.days-chip{display:inline-block;padding:2px 8px;border-radius:999px;background:#eaf3fb;color:#084874;font-weight:700;font-size:11px;letter-spacing:.02em}
+.days-chip.days-chip-paused{background:var(--paused);color:var(--paused-text)}
+.days-chip.days-chip-coming{background:var(--coming);color:var(--coming-text)}
+
+/* Global filter bar (status pills + date-range pills + custom date inputs) */
+.filter-bar{background:#fff;border-bottom:1px solid var(--border);padding:12px 32px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;position:sticky;top:0;z-index:9;font-size:13px}
+.filter-bar .filter-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.filter-bar .filter-label{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+.filter-bar .pill{background:#f0f2f5;border:1px solid transparent;color:#1f2330;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:600;cursor:pointer;transition:background .12s,border-color .12s,color .12s;font-family:inherit;line-height:1.4}
+.filter-bar .pill:hover{background:#e4e6eb}
+.filter-bar .pill.on{background:#084874;color:#fff;border-color:#084874}
+.filter-bar .pill.on:hover{background:#053454}
+.filter-bar .custom-range{display:none;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+.filter-bar .custom-range.open{display:inline-flex}
+.filter-bar .custom-range input[type="date"]{border:1px solid var(--border);border-radius:6px;padding:3px 6px;font:12px inherit;color:#1f2330}
+.filter-bar .filter-clear{color:var(--muted);font-size:11px;cursor:pointer;text-decoration:underline;margin-left:auto}
+.filter-bar .filter-clear:hover{color:#1f2330}
+.hidden-by-filter{display:none !important}
+
 /* Variant switcher (Credo-shape dirbar) */
 .dirbar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#f7f8fa;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-wrap:wrap;font-size:12px}
 .dirbar .dirlbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
@@ -102,6 +126,29 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
 </nav>
 </header>
 
+<!-- Global filter bar: applies across all three campaign sections. -->
+<div class="filter-bar" id="filter-bar">
+  <div class="filter-group">
+    <span class="filter-label">Status</span>
+    <button class="pill status-pill on" data-status="ACTIVE">Active</button>
+    <button class="pill status-pill on" data-status="PAUSED">Paused</button>
+    <button class="pill status-pill on" data-status="COMING">Coming</button>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Live during</span>
+    <button class="pill range-pill on" data-range="all">All time</button>
+    <button class="pill range-pill" data-range="this-month">This month</button>
+    <button class="pill range-pill" data-range="last-month">Last month</button>
+    <button class="pill range-pill" data-range="last-30">Last 30 days</button>
+    <button class="pill range-pill" data-range="last-90">Last 90 days</button>
+    <button class="pill range-pill" data-range="custom">Custom…</button>
+    <span class="custom-range" id="custom-range">
+      <input type="date" id="custom-start"> → <input type="date" id="custom-end">
+    </span>
+  </div>
+  <span class="filter-clear" id="filter-clear">Reset filters</span>
+</div>
+
 <section class="campaign" id="leads-section">
 <h2>1. Evergreen Leads Campaign</h2>
 <p class="campaign-meta">Ad set: <code>Leads - Evergreen</code>. July budget ~$1,800. 15 ads: 5 active + 7 paused + 3 v6 coming.</p>
@@ -126,7 +173,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
 </div>
 </div>
 <div class="leads-grid" id="leads-grid">
-    <div class="lead-card active" data-created="2026-05-05" data-spend="2503.68" data-leads="1640" data-cpl="1.53" data-ctr="5.9">
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-05-05" data-started="2026-05-05" data-paused="" data-spend="2503.68" data-leads="1640" data-cpl="1.53" data-ctr="5.9">
       <a class="card-link" href="details/burn-the-ships.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -134,6 +181,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v4</span></div></div>
           </div>
           <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-05">2026-05-05</time>
+          
+          <span class="days-chip" data-started="2026-05-05" data-paused="" data-status="ACTIVE"></span>
         </div>
         <div class="lead-body-copy">Hernán Cortés lands in Mexico with 11 ships and gives his men a shocking order. 'Burn the ships.' <span class="see-more">… See more</span></div>
       </a>
@@ -172,7 +224,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Burn the Ships · <code>burn-the-ships</code></div>
       </a>
     </div>
-    <div class="lead-card paused" data-created="2026-05-05" data-spend="85.04" data-leads="38" data-cpl="2.24" data-ctr="14.2">
+    <div class="lead-card paused" data-status="PAUSED" data-created="2026-05-05" data-started="2026-05-05" data-paused="2026-06-04" data-spend="85.04" data-leads="38" data-cpl="2.24" data-ctr="14.2">
       <a class="card-link" href="details/settled-too-soon.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -180,6 +232,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v4</span></div></div>
           </div>
           <span class="status-badge paused">PAUSED</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-05">2026-05-05</time>
+          <span class='run-label'>Paused</span> <time class='run-date' datetime='2026-06-04'>2026-06-04</time>
+          <span class="days-chip" data-started="2026-05-05" data-paused="2026-06-04" data-status="PAUSED"></span>
         </div>
         <div class="lead-body-copy">Some Israelites stopped before they reached the Promised Land. Canaan was still waiting on the other side. <span class="see-more">… See more</span></div>
       </a>
@@ -218,7 +275,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Settled Too Soon · <code>settled-too-soon</code></div>
       </a>
     </div>
-    <div class="lead-card paused" data-created="2026-05-05" data-spend="66.37" data-leads="23" data-cpl="2.89" data-ctr="11.4">
+    <div class="lead-card paused" data-status="PAUSED" data-created="2026-05-05" data-started="2026-05-05" data-paused="2026-06-04" data-spend="66.37" data-leads="23" data-cpl="2.89" data-ctr="11.4">
       <a class="card-link" href="details/one-look-too-many.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -226,6 +283,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v4</span></div></div>
           </div>
           <span class="status-badge paused">PAUSED</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-05">2026-05-05</time>
+          <span class='run-label'>Paused</span> <time class='run-date' datetime='2026-06-04'>2026-06-04</time>
+          <span class="days-chip" data-started="2026-05-05" data-paused="2026-06-04" data-status="PAUSED"></span>
         </div>
         <div class="lead-body-copy">Lot's wife looked back at Sodom one last time, and turned to a pillar of salt. <span class="see-more">… See more</span></div>
       </a>
@@ -264,7 +326,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">One Look Too Many · <code>one-look-too-many</code></div>
       </a>
     </div>
-    <div class="lead-card paused" data-created="2026-05-05" data-spend="69.51" data-leads="31" data-cpl="2.24" data-ctr="6.9">
+    <div class="lead-card paused" data-status="PAUSED" data-created="2026-05-05" data-started="2026-05-05" data-paused="2026-06-04" data-spend="69.51" data-leads="31" data-cpl="2.24" data-ctr="6.9">
       <a class="card-link" href="details/cut-at-the-root.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -272,6 +334,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v4</span></div></div>
           </div>
           <span class="status-badge paused">PAUSED</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-05">2026-05-05</time>
+          <span class='run-label'>Paused</span> <time class='run-date' datetime='2026-06-04'>2026-06-04</time>
+          <span class="days-chip" data-started="2026-05-05" data-paused="2026-06-04" data-status="PAUSED"></span>
         </div>
         <div class="lead-body-copy">Saul's sin started small — a partial obedience, a held-back animal. Roots grow in the dark. <span class="see-more">… See more</span></div>
       </a>
@@ -310,7 +377,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Cut at the Root · <code>cut-at-the-root</code></div>
       </a>
     </div>
-    <div class="lead-card paused" data-created="2026-05-05" data-spend="330.84" data-leads="108" data-cpl="3.06" data-ctr="6.4">
+    <div class="lead-card paused" data-status="PAUSED" data-created="2026-05-05" data-started="2026-05-05" data-paused="2026-06-04" data-spend="330.84" data-leads="108" data-cpl="3.06" data-ctr="6.4">
       <a class="card-link" href="details/the-dark-side2.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -318,6 +385,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v4</span></div></div>
           </div>
           <span class="status-badge paused">PAUSED</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-05">2026-05-05</time>
+          <span class='run-label'>Paused</span> <time class='run-date' datetime='2026-06-04'>2026-06-04</time>
+          <span class="days-chip" data-started="2026-05-05" data-paused="2026-06-04" data-status="PAUSED"></span>
         </div>
         <div class="lead-body-copy">Are you sitting in the dark in some area of your life? You just need to flip the switch. <span class="see-more">… See more</span></div>
       </a>
@@ -356,7 +428,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">The Dark Side · <code>the-dark-side2</code></div>
       </a>
     </div>
-    <div class="lead-card paused" data-created="2026-05-05" data-spend="75.06" data-leads="26" data-cpl="2.89" data-ctr="6.5">
+    <div class="lead-card paused" data-status="PAUSED" data-created="2026-05-05" data-started="2026-05-05" data-paused="2026-06-04" data-spend="75.06" data-leads="26" data-cpl="2.89" data-ctr="6.5">
       <a class="card-link" href="details/trust-without-maps.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -364,6 +436,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v4</span></div></div>
           </div>
           <span class="status-badge paused">PAUSED</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-05">2026-05-05</time>
+          <span class='run-label'>Paused</span> <time class='run-date' datetime='2026-06-04'>2026-06-04</time>
+          <span class="days-chip" data-started="2026-05-05" data-paused="2026-06-04" data-status="PAUSED"></span>
         </div>
         <div class="lead-body-copy">Abraham left Ur and walked toward a land he had never seen, with no map beyond a promise. <span class="see-more">… See more</span></div>
       </a>
@@ -402,7 +479,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Trust Without Maps · <code>trust-without-maps</code></div>
       </a>
     </div>
-    <div class="lead-card paused" data-created="2026-05-05" data-spend="160.67" data-leads="48" data-cpl="3.35" data-ctr="7.7">
+    <div class="lead-card paused" data-status="PAUSED" data-created="2026-05-05" data-started="2026-05-05" data-paused="2026-06-04" data-spend="160.67" data-leads="48" data-cpl="3.35" data-ctr="7.7">
       <a class="card-link" href="details/nowhere-to-hide2.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -410,6 +487,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v4</span></div></div>
           </div>
           <span class="status-badge paused">PAUSED</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-05">2026-05-05</time>
+          <span class='run-label'>Paused</span> <time class='run-date' datetime='2026-06-04'>2026-06-04</time>
+          <span class="days-chip" data-started="2026-05-05" data-paused="2026-06-04" data-status="PAUSED"></span>
         </div>
         <div class="lead-body-copy">Adam and Eve heard God in the garden and hid behind leaves. We've been hiding ever since. <span class="see-more">… See more</span></div>
       </a>
@@ -448,7 +530,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Nowhere to Hide · <code>nowhere-to-hide2</code></div>
       </a>
     </div>
-    <div class="lead-card paused" data-created="2026-05-05" data-spend="13.68" data-leads="6" data-cpl="2.28" data-ctr="10.9">
+    <div class="lead-card paused" data-status="PAUSED" data-created="2026-05-05" data-started="2026-05-05" data-paused="2026-06-04" data-spend="13.68" data-leads="6" data-cpl="2.28" data-ctr="10.9">
       <a class="card-link" href="details/one-more-fight.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -456,6 +538,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v4</span></div></div>
           </div>
           <span class="status-badge paused">PAUSED</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-05">2026-05-05</time>
+          <span class='run-label'>Paused</span> <time class='run-date' datetime='2026-06-04'>2026-06-04</time>
+          <span class="days-chip" data-started="2026-05-05" data-paused="2026-06-04" data-status="PAUSED"></span>
         </div>
         <div class="lead-body-copy">Most retreats happen one fight too soon. The reinforcements were already coming. <span class="see-more">… See more</span></div>
       </a>
@@ -494,7 +581,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">One More Fight · <code>one-more-fight</code></div>
       </a>
     </div>
-    <div class="lead-card active" data-created="2026-06-04" data-spend="27.26" data-leads="16" data-cpl="1.7" data-ctr="9.7">
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-06-04" data-started="2026-06-04" data-paused="" data-spend="27.26" data-leads="16" data-cpl="1.7" data-ctr="9.7">
       <a class="card-link" href="details/decide-before-you-decide.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -502,6 +589,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v5</span></div></div>
           </div>
           <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-06-04">2026-06-04</time>
+          
+          <span class="days-chip" data-started="2026-06-04" data-paused="" data-status="ACTIVE"></span>
         </div>
         <div class="lead-body-copy">The hardest choices in life don't happen in the moment. They happen before it. <span class="see-more">… See more</span></div>
       </a>
@@ -540,7 +632,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Decide Before You Decide · <code>decide-before-you-decide</code></div>
       </a>
     </div>
-    <div class="lead-card active" data-created="2026-06-04" data-spend="192.29" data-leads="96" data-cpl="2.0" data-ctr="5.4">
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-06-04" data-started="2026-06-04" data-paused="" data-spend="192.29" data-leads="96" data-cpl="2.0" data-ctr="5.4">
       <a class="card-link" href="details/leap-into-the-light.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -548,6 +640,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v5</span></div></div>
           </div>
           <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-06-04">2026-06-04</time>
+          
+          <span class="days-chip" data-started="2026-06-04" data-paused="" data-status="ACTIVE"></span>
         </div>
         <div class="lead-body-copy">What if God asked you to go without telling you where? An African Impala won't leap before it looks. <span class="see-more">… See more</span></div>
       </a>
@@ -586,7 +683,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Leap Into the Light · <code>leap-into-the-light</code></div>
       </a>
     </div>
-    <div class="lead-card active" data-created="2026-06-04" data-spend="45.47" data-leads="30" data-cpl="1.52" data-ctr="4.9">
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-06-04" data-started="2026-06-04" data-paused="" data-spend="45.47" data-leads="30" data-cpl="1.52" data-ctr="4.9">
       <a class="card-link" href="details/god-will-provide.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -594,6 +691,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v5</span></div></div>
           </div>
           <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-06-04">2026-06-04</time>
+          
+          <span class="days-chip" data-started="2026-06-04" data-paused="" data-status="ACTIVE"></span>
         </div>
         <div class="lead-body-copy">There's a moment on the way up Mount Moriah that really gets your attention. <span class="see-more">… See more</span></div>
       </a>
@@ -632,7 +734,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Keep Climbing Anyway · <code>god-will-provide</code></div>
       </a>
     </div>
-    <div class="lead-card active" data-created="2026-06-04" data-spend="29.03" data-leads="21" data-cpl="1.38" data-ctr="11.6">
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-06-04" data-started="2026-06-04" data-paused="" data-spend="29.03" data-leads="21" data-cpl="1.38" data-ctr="11.6">
       <a class="card-link" href="details/the-last-handful.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -640,6 +742,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v5</span></div></div>
           </div>
           <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-06-04">2026-06-04</time>
+          
+          <span class="days-chip" data-started="2026-06-04" data-paused="" data-status="ACTIVE"></span>
         </div>
         <div class="lead-body-copy">That sinking feeling when you check your bank account mid-month? The widow at Zarephath knew it too. <span class="see-more">… See more</span></div>
       </a>
@@ -678,7 +785,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Give the Last First · <code>the-last-handful</code></div>
       </a>
     </div>
-    <div class="lead-card coming" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <div class="lead-card coming" data-status="COMING" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <a class="card-link" href="details/only-grace.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -686,6 +793,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v6</span></div></div>
           </div>
           <span class="status-badge coming">COMING</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="COMING"></span>
         </div>
         <div class="lead-body-copy">Set your sail and risk the ocean. There's only grace. <span class="see-more">… See more</span></div>
       </a>
@@ -719,7 +831,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Set The Sail · <code>only-grace</code></div>
       </a>
     </div>
-    <div class="lead-card coming" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <div class="lead-card coming" data-status="COMING" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <a class="card-link" href="details/the-choice-between-two-cities.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -727,6 +839,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v6</span></div></div>
           </div>
           <span class="status-badge coming">COMING</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="COMING"></span>
         </div>
         <div class="lead-body-copy">Jonah picked Tarshish over Nineveh. What's your Nineveh? <span class="see-more">… See more</span></div>
       </a>
@@ -760,7 +877,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Choose Nineveh · <code>the-choice-between-two-cities</code></div>
       </a>
     </div>
-    <div class="lead-card coming" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <div class="lead-card coming" data-status="COMING" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <a class="card-link" href="details/bring-the-umbrella.html">
         <div class="lead-hdr">
           <div class="brand">
@@ -768,6 +885,11 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v6</span></div></div>
           </div>
           <span class="status-badge coming">COMING</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="COMING"></span>
         </div>
         <div class="lead-body-copy">After 3 years of drought, Elijah told King Ahab: 'I hear the sound of a heavy rain.' <span class="see-more">… See more</span></div>
       </a>
@@ -826,11 +948,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
 </div>
 </div>
 <div class="reels-grid" id="reach-grid">
-    <a class="reel-card active" href="details/reach-1436220981878240.html" data-created="2026-05-17" data-spend="7.45" data-leads="6167" data-cpl="1.21" data-ctr="6167">
+    <a class="reel-card active" href="details/reach-1436220981878240.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="7.45" data-leads="6167" data-cpl="1.21" data-ctr="6167">
       <div class="reel-thumb">📷</div>
       <div class="reel-meta">
         <div class="reel-name">God has a heart for missions</div>
         <div class="reel-platform">Instagram Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">6.2K</div><div class="stat-label">reach</div></div>
           <div class="stat"><div class="stat-value">$1.21</div><div class="stat-label">CPM-R</div></div>
@@ -838,11 +965,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1437277868439218.html" data-created="2026-05-17" data-spend="228.73" data-leads="177939" data-cpl="1.29" data-ctr="177939">
+    <a class="reel-card active" href="details/reach-1437277868439218.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="228.73" data-leads="177939" data-cpl="1.29" data-ctr="177939">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Are you struggling with God?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">177.9K</div><div class="stat-label">reach</div></div>
           <div class="stat"><div class="stat-value">$1.29</div><div class="stat-label">CPM-R</div></div>
@@ -850,11 +982,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1439048301595508.html" data-created="2026-05-17" data-spend="55.33" data-leads="48216" data-cpl="1.15" data-ctr="48216">
+    <a class="reel-card active" href="details/reach-1439048301595508.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="55.33" data-leads="48216" data-cpl="1.15" data-ctr="48216">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Open Bible = Strength</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">48.2K</div><div class="stat-label">reach</div></div>
           <div class="stat"><div class="stat-value">$1.15</div><div class="stat-label">CPM-R</div></div>
@@ -862,11 +999,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1434449902055348.html" data-created="2026-05-17" data-spend="172.45" data-leads="120017" data-cpl="1.44" data-ctr="120017">
+    <a class="reel-card active" href="details/reach-1434449902055348.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="172.45" data-leads="120017" data-cpl="1.44" data-ctr="120017">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Getting older doesn't mean you can't do anything</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">120.0K</div><div class="stat-label">reach</div></div>
           <div class="stat"><div class="stat-value">$1.44</div><div class="stat-label">CPM-R</div></div>
@@ -874,11 +1016,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1430970149069990.html" data-created="2026-05-17" data-spend="17.5" data-leads="14000" data-cpl="1.25" data-ctr="14000">
+    <a class="reel-card active" href="details/reach-1430970149069990.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="17.5" data-leads="14000" data-cpl="1.25" data-ctr="14000">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">A long story, but worth focusing on</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">14.0K</div><div class="stat-label">reach</div></div>
           <div class="stat"><div class="stat-value">$1.25</div><div class="stat-label">CPM-R</div></div>
@@ -886,11 +1033,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1430120852488253.html" data-created="2026-05-17" data-spend="8.37" data-leads="6282" data-cpl="1.33" data-ctr="6282">
+    <a class="reel-card active" href="details/reach-1430120852488253.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="8.37" data-leads="6282" data-cpl="1.33" data-ctr="6282">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Do you fail this test?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">6.3K</div><div class="stat-label">reach</div></div>
           <div class="stat"><div class="stat-value">$1.33</div><div class="stat-label">CPM-R</div></div>
@@ -898,59 +1050,94 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1442707771229561.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/reach-1442707771229561.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">One Starbucks, one conversation</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1443597787807226.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/reach-1443597787807226.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Is the Bible just a hype?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1445377154295956.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/reach-1445377154295956.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Do you ever wonder</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1446383470861991.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/reach-1446383470861991.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Are you sure?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1447332660767072.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/reach-1447332660767072.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Are you lonely?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1450892860411052.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/reach-1450892860411052.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">A sin is not a mistake</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/reach-1456628533170818.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/reach-1456628533170818.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">What's missing from your home?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a></div>
@@ -979,11 +1166,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
 </div>
 </div>
 <div class="reels-grid" id="engage-grid">
-    <a class="reel-card active" href="details/engage-1316121363469840.html" data-created="2026-05-17" data-spend="412.83" data-leads="119335" data-cpl="0.0035" data-ctr="119335">
+    <a class="reel-card active" href="details/engage-1316121363469840.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="412.83" data-leads="119335" data-cpl="0.0035" data-ctr="119335">
       <div class="reel-thumb">📷</div>
       <div class="reel-meta">
         <div class="reel-name">God has a heart for missions</div>
         <div class="reel-platform">Instagram Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">119,335</div><div class="stat-label">engagements</div></div>
           <div class="stat"><div class="stat-value">$0.0035</div><div class="stat-label">CPE</div></div>
@@ -991,11 +1183,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1439048301595508.html" data-created="2026-05-17" data-spend="22.51" data-leads="7707" data-cpl="0.0029" data-ctr="7707">
+    <a class="reel-card active" href="details/engage-1439048301595508.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="22.51" data-leads="7707" data-cpl="0.0029" data-ctr="7707">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Open Bible = Strength</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">7,707</div><div class="stat-label">engagements</div></div>
           <div class="stat"><div class="stat-value">$0.0029</div><div class="stat-label">CPE</div></div>
@@ -1003,11 +1200,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1437277868439218.html" data-created="2026-05-17" data-spend="11.06" data-leads="3919" data-cpl="0.0028" data-ctr="3919">
+    <a class="reel-card active" href="details/engage-1437277868439218.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="11.06" data-leads="3919" data-cpl="0.0028" data-ctr="3919">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Are you struggling with God?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">3,919</div><div class="stat-label">engagements</div></div>
           <div class="stat"><div class="stat-value">$0.0028</div><div class="stat-label">CPE</div></div>
@@ -1015,11 +1217,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1434449902055348.html" data-created="2026-05-17" data-spend="28.02" data-leads="8204" data-cpl="0.0034" data-ctr="8204">
+    <a class="reel-card active" href="details/engage-1434449902055348.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="28.02" data-leads="8204" data-cpl="0.0034" data-ctr="8204">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Getting older doesn't mean you can't do anything</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">8,204</div><div class="stat-label">engagements</div></div>
           <div class="stat"><div class="stat-value">$0.0034</div><div class="stat-label">CPE</div></div>
@@ -1027,11 +1234,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1430970149069990.html" data-created="2026-05-17" data-spend="18.22" data-leads="4945" data-cpl="0.0037" data-ctr="4945">
+    <a class="reel-card active" href="details/engage-1430970149069990.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="18.22" data-leads="4945" data-cpl="0.0037" data-ctr="4945">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">A long story, but worth focusing on</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">4,945</div><div class="stat-label">engagements</div></div>
           <div class="stat"><div class="stat-value">$0.0037</div><div class="stat-label">CPE</div></div>
@@ -1039,11 +1251,16 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1430120852488253.html" data-created="2026-05-17" data-spend="7.08" data-leads="2036" data-cpl="0.0035" data-ctr="2036">
+    <a class="reel-card active" href="details/engage-1430120852488253.html" data-status="ACTIVE" data-created="2026-05-17" data-started="2026-05-17" data-paused="" data-spend="7.08" data-leads="2036" data-cpl="0.0035" data-ctr="2036">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Do you fail this test?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-05-17">2026-05-17</time>
+          
+          <span class="days-chip" data-started="2026-05-17" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="reel-stats">
           <div class="stat"><div class="stat-value">2,036</div><div class="stat-label">engagements</div></div>
           <div class="stat"><div class="stat-value">$0.0035</div><div class="stat-label">CPE</div></div>
@@ -1051,59 +1268,94 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1442707771229561.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/engage-1442707771229561.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">One Starbucks, one conversation</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1443597787807226.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/engage-1443597787807226.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Is the Bible just a hype?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1445377154295956.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/engage-1445377154295956.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Do you ever wonder</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1446383470861991.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/engage-1446383470861991.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Are you sure?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1447332660767072.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/engage-1447332660767072.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">Are you lonely?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1450892860411052.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/engage-1450892860411052.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">A sin is not a mistake</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a>
-    <a class="reel-card active" href="details/engage-1456628533170818.html" data-created="2026-07-01" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <a class="reel-card active" href="details/engage-1456628533170818.html" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <div class="reel-thumb">▶</div>
       <div class="reel-meta">
         <div class="reel-name">What's missing from your home?</div>
         <div class="reel-platform">Facebook Reel · <span class="status-badge active">ACTIVE</span></div>
+        <div class="run-strip run-strip-compact">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
         <div class="stats-empty">New — no data yet</div>
       </div>
     </a></div>
@@ -1151,6 +1403,153 @@ document.querySelectorAll('.sort-group select').forEach(sel => {
     sortGrid(e.target.dataset.target, e.target.value);
   });
 });
+
+/* -----------------------------------------------------------------------
+ * Days-chip: fill each `.days-chip` with N days the ad ran
+ * ("14 days", "27 days · paused", "0 days · coming").
+ * ----------------------------------------------------------------------- */
+(function paintDaysChips(){
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  function daysBetween(a, b){
+    return Math.max(0, Math.round((b - a) / 86400000));
+  }
+  document.querySelectorAll('.days-chip').forEach(function(chip){
+    var startedStr = chip.dataset.started;
+    var pausedStr  = chip.dataset.paused;
+    var status     = chip.dataset.status;
+    if(!startedStr){ chip.textContent = ''; return; }
+    var started = new Date(startedStr + 'T00:00:00');
+    if(status === 'COMING'){
+      chip.classList.add('days-chip-coming');
+      chip.textContent = 'Not yet started';
+      return;
+    }
+    var end = pausedStr ? new Date(pausedStr + 'T00:00:00') : today;
+    var n = daysBetween(started, end);
+    if(pausedStr){
+      chip.classList.add('days-chip-paused');
+      chip.textContent = n + ' day' + (n === 1 ? '' : 's') + ' · paused';
+    } else {
+      chip.textContent = n + ' day' + (n === 1 ? '' : 's');
+    }
+  });
+})();
+
+/* -----------------------------------------------------------------------
+ * Filter bar: status pills + date-range pills (+ custom range inputs).
+ * A card matches iff (status in selected set) AND (card was live
+ * during [range.start, range.end]).
+ * "Live during" = card.started <= range.end AND (card.paused is null OR
+ * card.paused >= range.start).
+ * COMING ads have no paused date — treated as live from `started` onward
+ * (open interval). "All time" selects everything and disables date match.
+ * ----------------------------------------------------------------------- */
+(function initFilterBar(){
+  var bar = document.getElementById('filter-bar');
+  if(!bar) return;
+  var statusPills = bar.querySelectorAll('.status-pill');
+  var rangePills  = bar.querySelectorAll('.range-pill');
+  var customBox   = document.getElementById('custom-range');
+  var customStart = document.getElementById('custom-start');
+  var customEnd   = document.getElementById('custom-end');
+  var clearBtn    = document.getElementById('filter-clear');
+  var gridIds     = ['leads-grid','reach-grid','engage-grid'];
+  var countIds    = {'leads-grid':'leads-count','reach-grid':'reach-count','engage-grid':'engage-count'};
+
+  function computeRange(){
+    var activePill = bar.querySelector('.range-pill.on');
+    if(!activePill || activePill.dataset.range === 'all'){ return null; }
+    var today = new Date(); today.setHours(0,0,0,0);
+    var start, end;
+    switch(activePill.dataset.range){
+      case 'this-month':
+        start = new Date(today.getFullYear(), today.getMonth(), 1);
+        end   = today;
+        break;
+      case 'last-month':
+        start = new Date(today.getFullYear(), today.getMonth()-1, 1);
+        end   = new Date(today.getFullYear(), today.getMonth(), 0); // last day prev month
+        break;
+      case 'last-30':
+        end   = today;
+        start = new Date(today.getTime() - 30*86400000);
+        break;
+      case 'last-90':
+        end   = today;
+        start = new Date(today.getTime() - 90*86400000);
+        break;
+      case 'custom':
+        if(!customStart.value || !customEnd.value){ return null; }
+        start = new Date(customStart.value + 'T00:00:00');
+        end   = new Date(customEnd.value + 'T00:00:00');
+        break;
+    }
+    return {start: start, end: end};
+  }
+
+  function selectedStatuses(){
+    var set = {};
+    statusPills.forEach(function(p){ if(p.classList.contains('on')) set[p.dataset.status] = true; });
+    return set;
+  }
+
+  function applyFilters(){
+    var statuses = selectedStatuses();
+    var range = computeRange();
+    gridIds.forEach(function(gid){
+      var grid = document.getElementById(gid);
+      if(!grid) return;
+      var shown = 0;
+      Array.from(grid.children).forEach(function(card){
+        var status = card.dataset.status || '';
+        var startedStr = card.dataset.started || '';
+        var pausedStr  = card.dataset.paused  || '';
+        var passStatus = !!statuses[status];
+        var passRange  = true;
+        if(range && startedStr){
+          var started = new Date(startedStr + 'T00:00:00');
+          var pausedDate = pausedStr ? new Date(pausedStr + 'T00:00:00') : null;
+          passRange = (started <= range.end) && (pausedDate === null || pausedDate >= range.start);
+        }
+        if(passStatus && passRange){
+          card.classList.remove('hidden-by-filter');
+          shown++;
+        } else {
+          card.classList.add('hidden-by-filter');
+        }
+      });
+      var countEl = document.getElementById(countIds[gid]);
+      if(countEl) countEl.textContent = shown;
+    });
+  }
+
+  statusPills.forEach(function(p){
+    p.addEventListener('click', function(){
+      p.classList.toggle('on');
+      applyFilters();
+    });
+  });
+  rangePills.forEach(function(p){
+    p.addEventListener('click', function(){
+      rangePills.forEach(function(x){ x.classList.remove('on'); });
+      p.classList.add('on');
+      customBox.classList.toggle('open', p.dataset.range === 'custom');
+      applyFilters();
+    });
+  });
+  [customStart, customEnd].forEach(function(inp){
+    inp.addEventListener('change', applyFilters);
+  });
+  clearBtn.addEventListener('click', function(){
+    statusPills.forEach(function(p){ p.classList.add('on'); });
+    rangePills.forEach(function(p){ p.classList.toggle('on', p.dataset.range === 'all'); });
+    customBox.classList.remove('open');
+    customStart.value = ''; customEnd.value = '';
+    applyFilters();
+  });
+  applyFilters();
+})();
 </script>
 
 <script>
