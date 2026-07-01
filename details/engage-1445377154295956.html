@@ -19,56 +19,118 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .review-widget-hint{background:#e8f4ff;border:1px solid #99c7f0;padding:10px 14px;border-radius:6px;margin:16px 0;font-size:13px;color:#143866}
 .review-widget-hint code{background:#d6e6f5;padding:1px 4px;border-radius:3px}
 
-.container{max-width:900px;margin:0 auto;padding:24px 32px}
+.container{max-width:680px;margin:0 auto;padding:20px 16px}
 .back-link{color:var(--brand);text-decoration:none;font-size:14px;display:inline-block;margin-bottom:16px}
 .back-link:hover{text-decoration:underline}
-.ad-detail{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:24px}
-.detail-hdr{padding:20px 24px;border-bottom:1px solid var(--border)}
-.detail-hdr h1{margin:0 0 8px;font-size:22px}
-.detail-meta{color:var(--muted);font-size:13px}
-.detail-meta code{background:#f3f4f6;padding:2px 6px;border-radius:3px;font-size:12px}
-.detail-image img{display:block;width:100%;height:auto;max-height:600px;object-fit:contain;background:#000}
-.reel-embed{padding:24px;text-align:center;background:#000;color:#fff}
-.reel-embed a{color:#fff;font-size:18px;text-decoration:none}
-.detail-body{padding:24px}
-.detail-body p{margin:0 0 14px;line-height:1.6}
-.detail-metrics{padding:24px;background:var(--stat-bg);border-top:1px solid var(--border)}
-.detail-metrics h3{margin:0 0 12px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
-.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px}
-.metric-box{background:#fff;border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+
+/* Facebook feed post card — matches the way the ad appears in a real feed */
+.fb-post{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px;box-shadow:0 1px 2px rgba(0,0,0,0.03)}
+.fb-hdr{padding:12px 16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.fb-hdr-brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.fb-avatar{width:40px;height:40px;background:#0a3d62;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.fb-brand-meta{min-width:0}
+.fb-page-name{font-weight:600;font-size:14px;display:flex;align-items:center;gap:4px}
+.fb-verified{color:var(--brand);font-size:12px}
+.fb-sponsored{color:var(--muted);font-size:12px;display:flex;align-items:center;gap:4px}
+.fb-menu-dots{color:var(--muted);font-size:22px;line-height:1;padding:0 6px;cursor:default}
+.fb-body{padding:0 16px 12px;line-height:1.4;font-size:15px;white-space:pre-line}
+.fb-body p{margin:0 0 8px}
+.fb-body p:last-child{margin-bottom:0}
+.fb-image{background:#000;position:relative}
+.fb-image img{display:block;width:100%;height:auto;max-height:680px;object-fit:contain}
+.fb-image[data-comment-target]:hover{outline:2px solid var(--brand);outline-offset:-2px}
+.fb-link-preview{background:#f0f2f5;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--border)}
+.fb-link-preview-text{min-width:0;flex:1}
+.fb-link-domain{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.fb-link-title{font-weight:600;font-size:16px;line-height:1.25}
+.fb-cta{background:#e4e6eb;color:#050505;border:none;padding:8px 18px;border-radius:6px;font-weight:600;font-size:14px;cursor:default;flex-shrink:0}
+.fb-reactions{padding:8px 16px;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted);border-top:1px solid var(--border)}
+.fb-reactions-icons{display:flex;align-items:center;gap:4px}
+.fb-reaction-emoji{background:linear-gradient(135deg,#1877f2,#0e5db8);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;margin-left:-4px;border:2px solid #fff}
+.fb-reaction-emoji:first-child{margin-left:0}
+.fb-actions{padding:4px 8px;display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--border);color:var(--muted)}
+.fb-action{padding:10px;text-align:center;font-size:14px;font-weight:600;cursor:default;border-radius:6px}
+.fb-action:hover{background:#f0f2f5}
+
+/* Reel-specific — for Reach/Engagement pages */
+.fb-reel{position:relative;background:#000;aspect-ratio:9/16;max-height:640px;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:32px}
+.fb-reel-icon{font-size:80px;margin-bottom:18px;opacity:.4}
+.fb-reel-caption{font-size:15px;line-height:1.4;margin-bottom:20px}
+.fb-reel a{color:#fff;text-decoration:none;background:rgba(255,255,255,0.1);padding:10px 20px;border-radius:6px;font-size:14px;border:1px solid rgba(255,255,255,0.3)}
+.fb-reel a:hover{background:rgba(255,255,255,0.2)}
+
+/* Metadata / metrics below the post card */
+.detail-meta-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin-bottom:16px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.detail-meta-card code{background:#f3f4f6;padding:2px 6px;border-radius:3px;font-size:12px;color:var(--text)}
+.detail-meta-card strong{color:var(--text)}
+.detail-metrics{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:20px}
+.detail-metrics h3{margin:0 0 14px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.metric-box{background:var(--stat-bg);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
 .metric-value{font-size:22px;font-weight:700;color:var(--brand)}
 .metric-value.cpl-good{color:var(--good)}
 .metric-value.cpl-bad{color:var(--bad)}
 .metric-label{font-size:11px;color:var(--muted);text-transform:uppercase;margin-top:4px}
-.comments-section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:24px}
-.comments-section h2{margin:0 0 16px;font-size:18px}
-.comments-hint{color:var(--muted);font-size:13px;margin-bottom:20px}
+.comments-section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px}
+.comments-section h2{margin:0 0 12px;font-size:16px}
+.comments-hint{color:var(--muted);font-size:13px;margin:0}
 </style>
 </head><body>
 <div class="container">
   <a class="back-link" href="../feed-preview.html">← Back to preview hub</a>
-  <div class="ad-detail">
-    <div class="detail-hdr">
-      <h1>Do you ever wonder <span class="status-badge active" style="vertical-align:middle;margin-left:8px">ACTIVE</span></h1>
-      <div class="detail-meta">
-        Platform: Facebook Reel ·
-        Post ID: <code>1445377154295956</code> ·
-        Created: 2026-07-01 ·
-        Ad set: <code>Engagement - Evergreen</code>
+
+  <!-- Reel post — how this boost appears in a user's feed -->
+  <div class="fb-post">
+    <div class="fb-hdr">
+      <div class="fb-hdr-brand">
+        <div class="fb-avatar">TL</div>
+        <div class="fb-brand-meta">
+          <div class="fb-page-name">Touching Lives <span class="fb-verified">✓</span></div>
+          <div class="fb-sponsored">Sponsored · Facebook Reel</div>
+        </div>
+      </div>
+      <div class="fb-menu-dots">⋯</div>
+    </div>
+    <div class="fb-reel" data-comment-target>
+      <div>
+        <div class="fb-reel-icon">▶</div>
+        <div class="fb-reel-caption">Do you ever wonder</div>
+        <a href="https://www.facebook.com/reel/2808739889474971/" target="_blank" rel="noopener">Open original reel ↗</a>
       </div>
     </div>
-    <div class="reel-embed">
-      <div style="font-size:60px;margin-bottom:12px">▶</div>
-      <a href="https://www.facebook.com/reel/2808739889474971/" target="_blank" rel="noopener">Open original reel ↗</a>
+    <div class="fb-reactions">
+      <div class="fb-reactions-icons">
+        <span class="fb-reaction-emoji">👍</span>
+        <span class="fb-reaction-emoji">❤️</span>
+        <span class="fb-reaction-emoji">🙏</span>
+      </div>
+      <div>Comments · Shares</div>
     </div>
-    <div class="detail-metrics">
-      <h3>Lifetime performance (through 2026-06-30)</h3>
-      <p style="color:var(--muted);font-style:italic">No performance data yet — this boost was added on 2026-07-01.</p>
+    <div class="fb-actions">
+      <div class="fb-action">👍 Like</div>
+      <div class="fb-action">💬 Comment</div>
+      <div class="fb-action">↗ Share</div>
     </div>
   </div>
+
+  <!-- Metadata pill -->
+  <div class="detail-meta-card">
+    <div><strong>Status:</strong> <span class="status-badge active">ACTIVE</span></div>
+    <div><strong>Platform:</strong> Facebook Reel</div>
+    <div><strong>Post ID:</strong> <code>1445377154295956</code></div>
+    <div><strong>Created:</strong> 2026-07-01</div>
+    <div><strong>Ad set:</strong> <code>Engagement - Evergreen</code></div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="detail-metrics">
+    <h3>Lifetime performance (through 2026-06-30)</h3>
+    <p style="color:var(--muted);font-style:italic">No performance data yet — this boost was added on 2026-07-01.</p>
+  </div>
+
   <div class="comments-section">
-    <h2>💬 Feedback</h2>
-    <p class="comments-hint">Use the <em>Review comments</em> button (bottom-right) to leave anchored feedback on this reel — performance notes, ideas for what to boost next, or comments about the metrics. Comments persist in Firebase and sync across the team in real time.</p>
+    <h2>💬 Leave feedback</h2>
+    <p class="comments-hint">Click the <em>Comments</em> button (bottom-right) to activate review mode, then hover any element on this page — the reel card, the metadata, or any metric — to leave an anchored comment.</p>
   </div>
 </div>
 
