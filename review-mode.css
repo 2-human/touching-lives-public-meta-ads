@@ -1,0 +1,674 @@
+/*
+ * review-mode.css — composed 2026-07-01 from library/features/review-widget/
+ * Scoped under [data-review-mode="on"] per css-isolation.md.
+ * Loaded dynamically by review-bootstrap.js when ?review=1 is present.
+ */
+
+/* ============================================================
+   Chrome reset — establishes a clean styling root for widget
+   containers before the widget's own rules apply.
+   ============================================================ */
+[data-review-mode="on"] .review-banner,
+[data-review-mode="on"] .review-sidebar,
+[data-review-mode="on"] .review-sidebar-toggle,
+[data-review-mode="on"] .review-modal,
+[data-review-mode="on"] .review-modal-backdrop,
+[data-review-mode="on"] .review-toast,
+[data-review-mode="on"] .review-pill,
+[data-review-mode="on"] .review-pill-container,
+[data-review-mode="on"] .review-comment,
+[data-review-mode="on"] .review-group,
+[data-review-mode="on"] .review-group-header,
+[data-review-mode="on"] .review-group-footer {
+  all: revert;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+[data-review-mode="on"] .review-banner *,
+[data-review-mode="on"] .review-sidebar *,
+[data-review-mode="on"] .review-modal *,
+[data-review-mode="on"] .review-toast * {
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   Banner — top strip announcing review mode, exit button.
+   ============================================================ */
+[data-review-mode="on"] .review-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: #1f3a5f;
+  color: #f8fafc;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+  font-size: 0.875rem;
+}
+
+[data-review-mode="on"] .review-banner .review-banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+[data-review-mode="on"] .review-banner .review-banner-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+[data-review-mode="on"] .review-banner .review-banner-subtitle {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  line-height: 1.3;
+}
+
+[data-review-mode="on"] .review-banner .review-banner-exit {
+  background: rgba(248, 250, 252, 0.15);
+  color: #f8fafc;
+  border: 1px solid rgba(248, 250, 252, 0.3);
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  transition: background .15s;
+  white-space: nowrap;
+}
+
+[data-review-mode="on"] .review-banner .review-banner-exit:hover {
+  background: rgba(248, 250, 252, 0.25);
+}
+
+/* Push page body down so it clears the fixed banner. */
+[data-review-mode="on"] body {
+  padding-top: 4.5rem;
+}
+
+/* ============================================================
+   Sidebar drawer — right-anchored, always-open above 800px.
+   ============================================================ */
+[data-review-mode="on"] .review-sidebar {
+  position: fixed;
+  top: 4.5rem;
+  right: 0;
+  bottom: 0;
+  width: 380px;
+  max-width: 100vw;
+  z-index: 9998;
+  background: #f8fafc;
+  color: #1e293b;
+  border-left: 1px solid #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: -2px 0 12px rgba(15, 23, 42, 0.08);
+}
+
+[data-review-mode="on"] .review-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+[data-review-mode="on"] .review-sidebar-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: #1e293b;
+}
+
+[data-review-mode="on"] .review-sidebar .filter-row {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 0.5rem;
+}
+
+[data-review-mode="on"] .review-sidebar .filter-row button {
+  flex: 1;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.5rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: #64748b;
+  transition: background .15s, color .15s;
+}
+
+[data-review-mode="on"] .review-sidebar .filter-row button:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+[data-review-mode="on"] .review-sidebar .filter-row button.active {
+  background: #1f3a5f;
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+[data-review-mode="on"] .review-sidebar .empty {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-style: italic;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+/* Sidebar toggle (mobile / narrow) */
+[data-review-mode="on"] .review-sidebar-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9997;
+  background: #1f3a5f;
+  color: #f8fafc;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 14px rgba(31, 32, 36, 0.18);
+  display: none;
+}
+
+[data-review-mode="on"] .review-sidebar-toggle:hover {
+  background: #142646;
+}
+
+/* Below sidebar-collapse (800px): sidebar hidden by default, revealed via toggle */
+@media (max-width: 800px) {
+  [data-review-mode="on"] .review-sidebar {
+    transform: translateX(100%);
+    transition: transform .2s ease-out;
+  }
+  [data-review-mode="on"] .review-sidebar.open {
+    transform: translateX(0);
+  }
+  [data-review-mode="on"] .review-sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+/* ============================================================
+   Group + comment rows in sidebar
+   ============================================================ */
+[data-review-mode="on"] .review-group {
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+[data-review-mode="on"] .review-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  cursor: pointer;
+}
+
+[data-review-mode="on"] .review-group-header .anchor-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+  flex: 1;
+}
+
+[data-review-mode="on"] .review-group-header .anchor {
+  font-size: 0.6875rem;
+  color: #64748b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+[data-review-mode="on"] .review-group-header .anchor-preview {
+  font-size: 0.75rem;
+  color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-review-mode="on"] .review-group-header .group-status {
+  font-size: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+[data-review-mode="on"] .review-group-header .group-status.pending {
+  background: rgba(245, 158, 11, 0.15);
+  color: #78350f;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+[data-review-mode="on"] .review-group-header .group-status.applied {
+  background: rgba(22, 163, 74, 0.15);
+  color: #14532d;
+  border: 1px solid rgba(22, 163, 74, 0.3);
+}
+
+[data-review-mode="on"] .review-group .comments {
+  display: flex;
+  flex-direction: column;
+}
+
+[data-review-mode="on"] .review-comment {
+  padding: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+[data-review-mode="on"] .review-comment:last-child {
+  border-bottom: none;
+}
+
+[data-review-mode="on"] .review-comment.archived {
+  opacity: 0.6;
+}
+
+[data-review-mode="on"] .review-comment .text {
+  font-size: 0.875rem;
+  color: #1e293b;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+[data-review-mode="on"] .review-comment .replacement {
+  font-size: 0.8125rem;
+  background: #fef3c7;
+  color: #78350f;
+  padding: 0.5rem;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+[data-review-mode="on"] .review-comment .meta {
+  font-size: 0.6875rem;
+  color: #94a3b8;
+}
+
+[data-review-mode="on"] .review-comment .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+[data-review-mode="on"] .review-comment .actions button {
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: #1e293b;
+  line-height: 1.2;
+  transition: background .15s, border-color .15s, color .15s;
+}
+
+/* Per-action hover styling per css-isolation.md §"Per-action suffix classes". */
+[data-review-mode="on"] .review-comment .actions .apply-btn:hover {
+  background: rgba(22, 163, 74, 0.12);
+  border-color: #16a34a;
+  color: #14532d;
+}
+
+[data-review-mode="on"] .review-comment .actions .edit-btn:hover {
+  background: rgba(31, 58, 95, 0.10);
+  border-color: #1f3a5f;
+  color: #1f3a5f;
+}
+
+[data-review-mode="on"] .review-comment .actions .archive-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #64748b;
+}
+
+[data-review-mode="on"] .review-comment .actions .restore-btn:hover {
+  background: #e2e8f0;
+  border-color: #64748b;
+  color: #1e293b;
+}
+
+[data-review-mode="on"] .review-comment .actions .delete-btn:hover {
+  background: rgba(185, 28, 28, 0.10);
+  border-color: #b91c1c;
+  color: #b91c1c;
+}
+
+[data-review-mode="on"] .review-group-footer {
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+[data-review-mode="on"] .review-group-footer .archive-group-btn {
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.2;
+  transition: background .15s, border-color .15s;
+}
+
+[data-review-mode="on"] .review-group-footer .archive-group-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+/* ============================================================
+   Has-comment element outline + hover pill
+   ============================================================ */
+[data-review-mode="on"] [data-comment-id] {
+  outline: 1px dashed rgba(217, 119, 6, 0.35);
+  outline-offset: 2px;
+  position: relative;
+}
+
+[data-review-mode="on"] [data-comment-id].has-comment {
+  outline: 1px solid #d97706;
+  outline-offset: 2px;
+}
+
+[data-review-mode="on"] [data-comment-id].has-applied-comment {
+  outline: 1px solid #16a34a;
+  outline-offset: 2px;
+}
+
+/* Baseline: pill hidden. Non-negotiable per pill-hover-deepest.md */
+[data-review-mode="on"] .review-pill {
+  display: none;
+}
+
+[data-review-mode="on"] .review-pill-container {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Deepest-hovered anchored element reveals its pill */
+[data-review-mode="on"] [data-comment-id]:hover:not(:has([data-comment-id]:hover)) > .review-pill-container > .review-pill {
+  display: inline-flex;
+}
+
+[data-review-mode="on"] .review-pill {
+  align-items: center;
+  gap: 0.25rem;
+  background: #1f3a5f;
+  color: #f8fafc;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+  pointer-events: auto;
+  white-space: nowrap;
+}
+
+[data-review-mode="on"] .review-pill:hover {
+  background: #142646;
+}
+
+/* Also show the pill when the anchored element itself carries .has-comment or
+   .has-applied-comment (so reviewer can still access lifecycle actions via new
+   pill click). The deepest-hover rule still governs hover-only appearance. */
+
+/* ============================================================
+   Spotlight class (spotlight-on-click.md)
+   ============================================================ */
+@keyframes review-spotlight-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(217, 119, 6, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(217, 119, 6, 0);
+  }
+}
+
+[data-review-mode="on"] [data-comment-id].review-spotlit {
+  outline: 2px solid #d97706;
+  outline-offset: 2px;
+  animation: review-spotlight-pulse 4s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-review-mode="on"] [data-comment-id].review-spotlit {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Modal composer
+   ============================================================ */
+[data-review-mode="on"] .review-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(15, 23, 42, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+[data-review-mode="on"] .review-modal {
+  background: #f8fafc;
+  color: #1e293b;
+  border-radius: 8px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.35);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+[data-review-mode="on"] .review-modal h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1e293b;
+}
+
+[data-review-mode="on"] .review-modal .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+[data-review-mode="on"] .review-modal label {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+[data-review-mode="on"] .review-modal textarea {
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 4.5rem;
+  resize: vertical;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+[data-review-mode="on"] .review-modal textarea:focus {
+  outline: 2px solid #1f3a5f;
+  outline-offset: 1px;
+}
+
+[data-review-mode="on"] .review-modal .error {
+  color: #b91c1c;
+  font-size: 0.75rem;
+  min-height: 1em;
+}
+
+[data-review-mode="on"] .review-modal .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+[data-review-mode="on"] .review-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.2;
+  cursor: pointer;
+  background: transparent;
+  color: inherit;
+  transition: background .15s, border-color .15s, color .15s;
+}
+
+[data-review-mode="on"] .review-btn--primary {
+  background: #1f3a5f;
+  color: #f8fafc;
+  border-color: #1f3a5f;
+}
+
+[data-review-mode="on"] .review-btn--primary:hover {
+  background: #142646;
+  border-color: #142646;
+}
+
+[data-review-mode="on"] .review-btn--secondary {
+  background: transparent;
+  color: #1e293b;
+  border-color: #cbd5e1;
+}
+
+[data-review-mode="on"] .review-btn--secondary:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+[data-review-mode="on"] .review-btn--danger {
+  background: #b91c1c;
+  color: #f8fafc;
+  border-color: #b91c1c;
+}
+
+[data-review-mode="on"] .review-btn--danger:hover {
+  background: #7f1d1d;
+  border-color: #7f1d1d;
+}
+
+/* ============================================================
+   Toast
+   ============================================================ */
+[data-review-mode="on"] .review-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10001;
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.3);
+  max-width: 90vw;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+
+[data-review-mode="on"] .review-toast.show {
+  opacity: 1;
+}
+
+[data-review-mode="on"] .review-toast.error {
+  background: #b91c1c;
+}
+
+/* ============================================================
+   Layout adjustments for narrow viewports
+   ============================================================ */
+@media (max-width: 800px) {
+  [data-review-mode="on"] body {
+    padding-top: 4rem;
+  }
+  [data-review-mode="on"] .review-banner {
+    padding: 0.5rem 0.75rem;
+  }
+  [data-review-mode="on"] .review-banner .review-banner-title {
+    font-size: 1rem;
+  }
+  [data-review-mode="on"] .review-banner .review-banner-subtitle {
+    display: none;
+  }
+  [data-review-mode="on"] .review-sidebar {
+    top: 3.25rem;
+    width: 100%;
+  }
+}
+
+@media print {
+  [data-review-mode="on"] .review-banner,
+  [data-review-mode="on"] .review-sidebar,
+  [data-review-mode="on"] .review-sidebar-toggle,
+  [data-review-mode="on"] .review-modal-backdrop,
+  [data-review-mode="on"] .review-toast,
+  [data-review-mode="on"] .review-pill-container {
+    display: none !important;
+  }
+  [data-review-mode="on"] body {
+    padding-top: 0;
+  }
+}

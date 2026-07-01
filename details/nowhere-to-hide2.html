@@ -16,8 +16,8 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .status-badge.paused{background:var(--paused);color:var(--paused-text)}
 .status-badge.coming{background:var(--coming);color:var(--coming-text)}
 .version-tag{color:var(--muted);font-family:ui-monospace,monospace;font-size:10px}
-.giscus-notice{background:#fff8dc;border:1px solid #e0c060;padding:10px 14px;border-radius:6px;margin:16px 0;font-size:13px;color:#6f5b00}
-.giscus-notice code{background:#f3edd6;padding:1px 4px;border-radius:3px}
+.review-widget-hint{background:#e8f4ff;border:1px solid #99c7f0;padding:10px 14px;border-radius:6px;margin:16px 0;font-size:13px;color:#143866}
+.review-widget-hint code{background:#d6e6f5;padding:1px 4px;border-radius:3px}
 
 .container{max-width:900px;margin:0 auto;padding:24px 32px}
 .back-link{color:var(--brand);text-decoration:none;font-size:14px;display:inline-block;margin-bottom:16px}
@@ -83,35 +83,11 @@ header.page-hdr p{margin:0;color:var(--muted)}
     </div>
   </div>
   <div class="comments-section">
-    <h2>💬 Comments &amp; Feedback</h2>
-    <p class="comments-hint">Leave comments to update this ad's copy, note performance insights, or capture ideas for future ads inspired by this creative.</p>
-    
-        <div class="giscus-notice">
-          <strong>Setup needed:</strong> Enable Discussions on
-          <code>tnosugar/touching-lives-public-meta-ads</code>, install the
-          <a href="https://github.com/apps/giscus" target="_blank">Giscus app</a>,
-          then edit <code>work-setup/build-feed-preview.py</code> — replace
-          <code>GISCUS_REPO_ID</code> and <code>GISCUS_CATEGORY_ID</code> with
-          the values from <a href="https://giscus.app" target="_blank">giscus.app</a>.
-          Rebuild and push.
-        </div>
-    
-    <script src="https://giscus.app/client.js"
-        data-repo="tnosugar/touching-lives-public-meta-ads"
-        data-repo-id="R_kgDO_REPLACE_ME"
-        data-category="Ad Feedback"
-        data-category-id="DIC_kwDO_REPLACE_ME"
-        data-mapping="specific"
-        data-term="ad-nowhere-to-hide2"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="light"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-    </script>
+    <h2>💬 Feedback</h2>
+    <p class="comments-hint">Use the <em>Review comments</em> button (bottom-right) to leave anchored feedback on any element of this ad — image, message text, headline, or metric. Comments persist in Firebase and sync across the team in real time.</p>
   </div>
 </div>
+
+<script src="../contact-form.config.js" defer></script>
+<script src="../review-bootstrap.js" defer></script>
 </body></html>
