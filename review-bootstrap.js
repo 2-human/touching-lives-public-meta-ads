@@ -34,6 +34,12 @@
   }
 
   document.documentElement.setAttribute('data-review-mode', 'on');
-  var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'review-mode.css'; document.head.appendChild(css);
-  var js = document.createElement('script'); js.src = 'review-mode.js'; document.body.appendChild(js);
+  // Resolve widget assets relative to THIS bootstrap script, not the current
+  // page — TL detail pages live at /details/{slug}.html but the widget files
+  // sit at the mirror root, so bare 'review-mode.css' would 404 from a
+  // detail page. Credo's pages sit next to the widget so it never hit this.
+  var self = document.currentScript || document.querySelector('script[src$="review-bootstrap.js"]');
+  var base = self ? self.src : window.location.href;
+  var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('review-mode.css', base).href; document.head.appendChild(css);
+  var js = document.createElement('script'); js.src = new URL('review-mode.js', base).href; document.body.appendChild(js);
 })();
