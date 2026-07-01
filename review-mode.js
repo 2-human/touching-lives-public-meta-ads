@@ -216,8 +216,18 @@ function tryAnchor(el, tagHint) {
 
   // Mode-gated allowlist-vs-deny-list decision
   if (state.commentableContent === 'direct-text') {
-    if (NEVER_ANCHOR.has(tag)) return false;
-    if (!hasDirectText(el)) return false;
+    // Touching-lives variation (2026-07-01): data-comment-target is an
+    // always-honored opt-in escape hatch, even in direct-text mode. Lets
+    // ad-preview pages mark specific <img> elements as anchorable — images
+    // have no direct text so direct-text mode alone would skip them, and
+    // `img` is in NEVER_ANCHOR. Only the opt-in bypasses both checks;
+    // everything else still respects the deny-list + text requirement.
+    // Documented in .composition-manifest.md §"TL variations".
+    const optedIn = el.hasAttribute('data-comment-target');
+    if (!optedIn) {
+      if (NEVER_ANCHOR.has(tag)) return false;
+      if (!hasDirectText(el)) return false;
+    }
   } else {
     // 'allowlist' mode (default) — per anchor-strategy.md + anchor-extensibility.md
     const tags = getEffectiveAnchorTags();
