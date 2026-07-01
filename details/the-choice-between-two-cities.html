@@ -55,6 +55,9 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .variants-container img,.variants-container video{width:100%;display:block;max-height:680px;object-fit:contain}
 .variants-container video{background:#000}
 .variants-container[data-comment-target]:hover{outline:2px solid #084874;outline-offset:-2px}
+.variants-container.video-only{background:#000}
+.variants-container.video-only .v-vid-solo{display:block;width:100%;max-height:680px;object-fit:contain}
+.version-tag[data-version^="v8-video"],.version-tag[data-version="v8-video"]{color:#c85300}
 
 .container{max-width:680px;margin:0 auto;padding:20px 16px}
 .back-link{color:var(--brand);text-decoration:none;font-size:14px;display:inline-block;margin-bottom:16px}
@@ -186,7 +189,7 @@ header.page-hdr p{margin:0;color:var(--muted)}
 
   <!-- Metadata pill -->
   <div class="detail-meta-card">
-    <div><strong>Status:</strong> <span class="status-badge coming">COMING</span></div>
+    <div><strong>Status:</strong> <span class="status-badge active">ACTIVE</span></div>
     <div><strong>Version:</strong> <span class="version-tag">v6</span></div>
     <div><strong>Slug:</strong> <code>the-choice-between-two-cities</code></div>
     <div><strong>Created:</strong> 2026-07-01</div>

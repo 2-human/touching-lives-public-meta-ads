@@ -55,6 +55,9 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .variants-container img,.variants-container video{width:100%;display:block;max-height:680px;object-fit:contain}
 .variants-container video{background:#000}
 .variants-container[data-comment-target]:hover{outline:2px solid #084874;outline-offset:-2px}
+.variants-container.video-only{background:#000}
+.variants-container.video-only .v-vid-solo{display:block;width:100%;max-height:680px;object-fit:contain}
+.version-tag[data-version^="v8-video"],.version-tag[data-version="v8-video"]{color:#c85300}
 
 nav.tabs{display:flex;margin-top:16px}
 nav.tabs button{background:transparent;border:none;border-bottom:3px solid transparent;padding:12px 20px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
@@ -120,7 +123,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
 <span class="status-badge coming">Coming (v6, pending upload)</span>
 </div>
 <nav class="tabs">
-<button class="tab active" data-target="leads-section">Leads <span class="tab-count">15</span></button>
+<button class="tab active" data-target="leads-section">Leads <span class="tab-count">23</span></button>
 <button class="tab" data-target="reach-section">Reach <span class="tab-count">13</span></button>
 <button class="tab" data-target="engage-section">Engagement <span class="tab-count">13</span></button>
 </nav>
@@ -151,7 +154,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
 
 <section class="campaign" id="leads-section">
 <h2>1. Evergreen Leads Campaign</h2>
-<p class="campaign-meta">Ad set: <code>Leads - Evergreen</code>. July budget $1,800. 15 ads: 8 active + 7 paused. Refreshed 2026-07-01 (mid-day).</p>
+<p class="campaign-meta">Ad set: <code>Leads - Evergreen</code>. July budget $1,800. 23 ads: 8 static placement-customized active + 8 video-only active (9:16 Reels/Stories) + 7 paused. Refreshed 2026-07-01.</p>
 <div class="kpis">
 <div class="kpi"><div class="kpi-value">$3,631</div><div class="kpi-label">lifetime spend</div></div>
 <div class="kpi"><div class="kpi-value">2,097</div><div class="kpi-label">leads generated</div></div>
@@ -159,7 +162,7 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
 <div class="kpi"><div class="kpi-value">Burn the Ships</div><div class="kpi-label">top ad (79% leads)</div></div>
 </div>
 <div class="controls">
-<div>Showing <span id="leads-count">15</span> ads</div>
+<div>Showing <span id="leads-count">23</span> ads</div>
 <div class="sort-group">
 <label for="leads-sort">Sort by</label>
 <select id="leads-sort" data-target="leads-grid">
@@ -785,19 +788,19 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Give the Last First · <code>the-last-handful</code></div>
       </a>
     </div>
-    <div class="lead-card coming" data-status="COMING" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <a class="card-link" href="details/only-grace.html">
         <div class="lead-hdr">
           <div class="brand">
             <div class="brand-circle">TL</div>
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v6</span></div></div>
           </div>
-          <span class="status-badge coming">COMING</span>
+          <span class="status-badge active">ACTIVE</span>
         </div>
         <div class="run-strip">
           <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
           
-          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="COMING"></span>
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
         </div>
         <div class="lead-body-copy">Set your sail and risk the ocean. There's only grace. <span class="see-more">… See more</span></div>
       </a>
@@ -831,19 +834,19 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Set The Sail · <code>only-grace</code></div>
       </a>
     </div>
-    <div class="lead-card coming" data-status="COMING" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <a class="card-link" href="details/the-choice-between-two-cities.html">
         <div class="lead-hdr">
           <div class="brand">
             <div class="brand-circle">TL</div>
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v6</span></div></div>
           </div>
-          <span class="status-badge coming">COMING</span>
+          <span class="status-badge active">ACTIVE</span>
         </div>
         <div class="run-strip">
           <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
           
-          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="COMING"></span>
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
         </div>
         <div class="lead-body-copy">Jonah picked Tarshish over Nineveh. What's your Nineveh? <span class="see-more">… See more</span></div>
       </a>
@@ -877,19 +880,19 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         <div class="ad-name">Choose Nineveh · <code>the-choice-between-two-cities</code></div>
       </a>
     </div>
-    <div class="lead-card coming" data-status="COMING" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
       <a class="card-link" href="details/bring-the-umbrella.html">
         <div class="lead-hdr">
           <div class="brand">
             <div class="brand-circle">TL</div>
             <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v6</span></div></div>
           </div>
-          <span class="status-badge coming">COMING</span>
+          <span class="status-badge active">ACTIVE</span>
         </div>
         <div class="run-strip">
           <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
           
-          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="COMING"></span>
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
         </div>
         <div class="lead-body-copy">After 3 years of drought, Elijah told King Ahab: 'I hear the sound of a heavy rain.' <span class="see-more">… See more</span></div>
       </a>
@@ -921,6 +924,246 @@ section.campaign .campaign-meta{color:var(--muted);margin-bottom:16px}
         </div>
         <div class="stats-empty">Pending upload — no data yet</div>
         <div class="ad-name">Watch For The Cloud · <code>bring-the-umbrella</code></div>
+      </a>
+    </div>
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+      <a class="card-link" href="details/burn-the-ships-video.html">
+        <div class="lead-hdr">
+          <div class="brand">
+            <div class="brand-circle">TL</div>
+            <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v8-video</span></div></div>
+          </div>
+          <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
+        <div class="lead-body-copy">3-second Reels/Stories cut. Cortés lands with 11 ships and gives his men a shocking order: 'Burn the ships.' <span class="see-more">… See more</span></div>
+      </a>
+      
+      <div class="variants-container video-only" data-slug="burn-the-ships-video" data-video-only="1"
+           data-comment-target data-comment-id="burn-the-ships-video-cr-video" data-variant-note="Video · 9:16 · 3s">
+        <video class="v-vid v-vid-solo" src="burn-the-ships/v4/burn-the-ships-9x16-3s.mp4" muted loop playsinline autoplay preload="metadata"></video>
+      </div>
+      <a class="card-link" href="details/burn-the-ships-video.html">
+        <div class="lead-link">
+          <div><div class="lead-link-domain">TOUCHINGLIVES.COM</div><div class="lead-link-title">Get The Daily Devotional to Your Inbox</div></div>
+          <button class="cta-btn">Sign Up</button>
+        </div>
+        <div class="stats-empty">Pending upload — no data yet</div>
+        <div class="ad-name">Burn the Ships (Video) · <code>burn-the-ships-video</code></div>
+      </a>
+    </div>
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+      <a class="card-link" href="details/decide-before-you-decide-video.html">
+        <div class="lead-hdr">
+          <div class="brand">
+            <div class="brand-circle">TL</div>
+            <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v8-video</span></div></div>
+          </div>
+          <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
+        <div class="lead-body-copy">3-second Reels/Stories cut. The hardest choices in life don't happen in the moment. They happen before it. <span class="see-more">… See more</span></div>
+      </a>
+      
+      <div class="variants-container video-only" data-slug="decide-before-you-decide-video" data-video-only="1"
+           data-comment-target data-comment-id="decide-before-you-decide-video-cr-video" data-variant-note="Video · 9:16 · 3s">
+        <video class="v-vid v-vid-solo" src="decide-before-you-decide/v5/decide-before-you-decide-9x16-3s.mp4" muted loop playsinline autoplay preload="metadata"></video>
+      </div>
+      <a class="card-link" href="details/decide-before-you-decide-video.html">
+        <div class="lead-link">
+          <div><div class="lead-link-domain">TOUCHINGLIVES.COM</div><div class="lead-link-title">Get The Daily Devotional to Your Inbox</div></div>
+          <button class="cta-btn">Sign Up</button>
+        </div>
+        <div class="stats-empty">Pending upload — no data yet</div>
+        <div class="ad-name">Decide Before You Decide (Video) · <code>decide-before-you-decide-video</code></div>
+      </a>
+    </div>
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+      <a class="card-link" href="details/leap-into-the-light-video.html">
+        <div class="lead-hdr">
+          <div class="brand">
+            <div class="brand-circle">TL</div>
+            <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v8-video</span></div></div>
+          </div>
+          <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
+        <div class="lead-body-copy">3-second Reels/Stories cut. God asks Abram to leave everything with just one promise: 'I will show you.' <span class="see-more">… See more</span></div>
+      </a>
+      
+      <div class="variants-container video-only" data-slug="leap-into-the-light-video" data-video-only="1"
+           data-comment-target data-comment-id="leap-into-the-light-video-cr-video" data-variant-note="Video · 9:16 · 3s">
+        <video class="v-vid v-vid-solo" src="leap-into-the-light/v5/leap-into-the-light-9x16-3s.mp4" muted loop playsinline autoplay preload="metadata"></video>
+      </div>
+      <a class="card-link" href="details/leap-into-the-light-video.html">
+        <div class="lead-link">
+          <div><div class="lead-link-domain">TOUCHINGLIVES.COM</div><div class="lead-link-title">Get The Daily Devotional to Your Inbox</div></div>
+          <button class="cta-btn">Sign Up</button>
+        </div>
+        <div class="stats-empty">Pending upload — no data yet</div>
+        <div class="ad-name">Leap Into the Light (Video) · <code>leap-into-the-light-video</code></div>
+      </a>
+    </div>
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+      <a class="card-link" href="details/god-will-provide-video.html">
+        <div class="lead-hdr">
+          <div class="brand">
+            <div class="brand-circle">TL</div>
+            <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v8-video</span></div></div>
+          </div>
+          <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
+        <div class="lead-body-copy">3-second Reels/Stories cut. 'God himself will provide the lamb.' And the two of them went on together. <span class="see-more">… See more</span></div>
+      </a>
+      
+      <div class="variants-container video-only" data-slug="god-will-provide-video" data-video-only="1"
+           data-comment-target data-comment-id="god-will-provide-video-cr-video" data-variant-note="Video · 9:16 · 3s">
+        <video class="v-vid v-vid-solo" src="god-will-provide/v5/god-will-provide-9x16-3s.mp4" muted loop playsinline autoplay preload="metadata"></video>
+      </div>
+      <a class="card-link" href="details/god-will-provide-video.html">
+        <div class="lead-link">
+          <div><div class="lead-link-domain">TOUCHINGLIVES.COM</div><div class="lead-link-title">Get The Daily Devotional to Your Inbox</div></div>
+          <button class="cta-btn">Sign Up</button>
+        </div>
+        <div class="stats-empty">Pending upload — no data yet</div>
+        <div class="ad-name">Keep Climbing Anyway (Video) · <code>god-will-provide-video</code></div>
+      </a>
+    </div>
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+      <a class="card-link" href="details/the-last-handful-video.html">
+        <div class="lead-hdr">
+          <div class="brand">
+            <div class="brand-circle">TL</div>
+            <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v8-video</span></div></div>
+          </div>
+          <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
+        <div class="lead-body-copy">3-second Reels/Stories cut. She was down to her last handful of flour. Then Elijah asked for a piece of bread first. <span class="see-more">… See more</span></div>
+      </a>
+      
+      <div class="variants-container video-only" data-slug="the-last-handful-video" data-video-only="1"
+           data-comment-target data-comment-id="the-last-handful-video-cr-video" data-variant-note="Video · 9:16 · 3s">
+        <video class="v-vid v-vid-solo" src="the-last-handful/v5/the-last-handful-9x16-3s.mp4" muted loop playsinline autoplay preload="metadata"></video>
+      </div>
+      <a class="card-link" href="details/the-last-handful-video.html">
+        <div class="lead-link">
+          <div><div class="lead-link-domain">TOUCHINGLIVES.COM</div><div class="lead-link-title">Get The Daily Devotional to Your Inbox</div></div>
+          <button class="cta-btn">Sign Up</button>
+        </div>
+        <div class="stats-empty">Pending upload — no data yet</div>
+        <div class="ad-name">Give the Last First (Video) · <code>the-last-handful-video</code></div>
+      </a>
+    </div>
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+      <a class="card-link" href="details/only-grace-video.html">
+        <div class="lead-hdr">
+          <div class="brand">
+            <div class="brand-circle">TL</div>
+            <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v8-video</span></div></div>
+          </div>
+          <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
+        <div class="lead-body-copy">3-second Reels/Stories cut. Set your sail and risk the ocean. There's only grace. <span class="see-more">… See more</span></div>
+      </a>
+      
+      <div class="variants-container video-only" data-slug="only-grace-video" data-video-only="1"
+           data-comment-target data-comment-id="only-grace-video-cr-video" data-variant-note="Video · 9:16 · 3s">
+        <video class="v-vid v-vid-solo" src="only-grace/v6/only-grace-9x16-3s.mp4" muted loop playsinline autoplay preload="metadata"></video>
+      </div>
+      <a class="card-link" href="details/only-grace-video.html">
+        <div class="lead-link">
+          <div><div class="lead-link-domain">TOUCHINGLIVES.COM</div><div class="lead-link-title">Get The Daily Devotional to Your Inbox</div></div>
+          <button class="cta-btn">Sign Up</button>
+        </div>
+        <div class="stats-empty">Pending upload — no data yet</div>
+        <div class="ad-name">Set The Sail (Video) · <code>only-grace-video</code></div>
+      </a>
+    </div>
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+      <a class="card-link" href="details/the-choice-between-two-cities-video.html">
+        <div class="lead-hdr">
+          <div class="brand">
+            <div class="brand-circle">TL</div>
+            <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v8-video</span></div></div>
+          </div>
+          <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
+        <div class="lead-body-copy">3-second Reels/Stories cut. Jonah picks Tarshish over Nineveh. What's your Nineveh? <span class="see-more">… See more</span></div>
+      </a>
+      
+      <div class="variants-container video-only" data-slug="the-choice-between-two-cities-video" data-video-only="1"
+           data-comment-target data-comment-id="the-choice-between-two-cities-video-cr-video" data-variant-note="Video · 9:16 · 3s">
+        <video class="v-vid v-vid-solo" src="the-choice-between-two-cities/v6/the-choice-between-two-cities-9x16-3s.mp4" muted loop playsinline autoplay preload="metadata"></video>
+      </div>
+      <a class="card-link" href="details/the-choice-between-two-cities-video.html">
+        <div class="lead-link">
+          <div><div class="lead-link-domain">TOUCHINGLIVES.COM</div><div class="lead-link-title">Get The Daily Devotional to Your Inbox</div></div>
+          <button class="cta-btn">Sign Up</button>
+        </div>
+        <div class="stats-empty">Pending upload — no data yet</div>
+        <div class="ad-name">Choose Nineveh (Video) · <code>the-choice-between-two-cities-video</code></div>
+      </a>
+    </div>
+    <div class="lead-card active" data-status="ACTIVE" data-created="2026-07-01" data-started="2026-07-01" data-paused="" data-spend="0" data-leads="0" data-cpl="99999" data-ctr="0">
+      <a class="card-link" href="details/bring-the-umbrella-video.html">
+        <div class="lead-hdr">
+          <div class="brand">
+            <div class="brand-circle">TL</div>
+            <div><div class="brand-name">Touching Lives</div><div class="brand-sub">Sponsored · <span class="version-tag">v8-video</span></div></div>
+          </div>
+          <span class="status-badge active">ACTIVE</span>
+        </div>
+        <div class="run-strip">
+          <span class="run-label">Started</span> <time class="run-date" datetime="2026-07-01">2026-07-01</time>
+          
+          <span class="days-chip" data-started="2026-07-01" data-paused="" data-status="ACTIVE"></span>
+        </div>
+        <div class="lead-body-copy">3-second Reels/Stories cut. Three years of drought. But Elijah hears 'the sound of a heavy rain.' <span class="see-more">… See more</span></div>
+      </a>
+      
+      <div class="variants-container video-only" data-slug="bring-the-umbrella-video" data-video-only="1"
+           data-comment-target data-comment-id="bring-the-umbrella-video-cr-video" data-variant-note="Video · 9:16 · 3s">
+        <video class="v-vid v-vid-solo" src="bring-the-umbrella/v6/bring-the-umbrella-9x16-3s.mp4" muted loop playsinline autoplay preload="metadata"></video>
+      </div>
+      <a class="card-link" href="details/bring-the-umbrella-video.html">
+        <div class="lead-link">
+          <div><div class="lead-link-domain">TOUCHINGLIVES.COM</div><div class="lead-link-title">Get The Daily Devotional to Your Inbox</div></div>
+          <button class="cta-btn">Sign Up</button>
+        </div>
+        <div class="stats-empty">Pending upload — no data yet</div>
+        <div class="ad-name">Watch For The Cloud (Video) · <code>bring-the-umbrella-video</code></div>
       </a>
     </div></div>
 </section>
