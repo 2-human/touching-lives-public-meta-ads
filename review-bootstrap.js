@@ -1,206 +1,39 @@
-// public/meta-ads/review-bootstrap.js
-//
-// Adopted 2026-07-01 from glinda/public/method/review-bootstrap.js (glinda
-// composed 2026-05-10; re-composed 2026-05-13 for the inert-entry-button
-// atomic). This is a cross-project adoption — glinda's mature composed
-// output copied over verbatim except for the config-global rename from
-// GLINDA_CONTACT_CONFIG to TOUCHING_LIVES_CONTACT_CONFIG. See
-// .composition-manifest.md alongside this file for full provenance.
-//
-// Loaded on every page. Two responsibilities:
-//
-//   1. ALWAYS — injects a floating entry button (bottom-right) per
-//      library/features/review-widget/inert-entry-button.md. Clicking
-//      it sets ?review=1 and hard-reloads, triggering (2) below.
-//
-//   2. WHEN ?review=1 — dynamically loads review-mode.css and
-//      review-mode.js, sets data-review-mode="on", and hands off to
-//      the widget module. The entry button is hidden in this state;
-//      the banner's Exit affordance handles the reverse transition.
-//
-// Self-locating: derives its own URL via document.currentScript so
-// review-mode.css and review-mode.js are loaded from the same folder,
-// regardless of whether the site serves at the github.io sub-path or
-// the canonical CNAME root.
-//
-// Source-of-truth: do NOT hand-edit. Re-adopt via the source (glinda).
-
+/* review-bootstrap.js — inert-by-default loader for the review widget.
+ * No ?review=1  -> only a floating entry button (no widget chrome, no backend).
+ * ?review=1     -> sets data-review-mode=on, loads review-mode.css + review-mode.js.
+ *
+ * Adopted 2026-07-01 from credo/public/meta-ads-preview/review-bootstrap.js
+ * with two project-specific edits: (a) config global renamed to
+ * TOUCHING_LIVES_REVIEW_CONFIG per FEATURE.md convention; (b) toggle-button
+ * palette swapped from Credo red to Touching Lives deep-navy #084874 /
+ * darker #053454. Everything else is Credo verbatim (Open/Resolved tabs,
+ * reviewer name prompt, localStorage fallback).
+ */
 (function () {
-  'use strict';
+  var cfg = window.TOUCHING_LIVES_REVIEW_CONFIG || {};
+  var L = cfg.REVIEW_LABELS || {};
+  var active = new URLSearchParams(window.location.search).get('review') === '1';
 
-  var params = new URLSearchParams(window.location.search);
-  var reviewActive = params.get('review') === '1';
-
-  // ----- (1) Inert-page entry button per inert-entry-button.md -----
-  // Injected on the inert path only — the function early-exits when
-  // review is already active. Token-resolved colors are pinned here as
-  // literals (glinda's brand-token values — kept as-is per the 2026-07-01
-  // adoption note; re-toning to Touching Lives navy is a future pass):
-  //   background       primary-deep      #8705E4
-  //   color            surface-base      #FFFFFF
-  //   hover background primary-darker    #6804B5
-  //   shadow tint      surface-overlay   rgba(1, 5, 94, 0.18) / 0.22
-  function injectEntryButton() {
-    if (reviewActive) return;
-
-    var style = document.createElement('style');
-    style.textContent = [
-      '.review-toggle-btn {',
-      '  position: fixed;',
-      '  bottom: 20px;',
-      '  right: 20px;',
-      '  z-index: 9990;',
-      '  background: #8705E4;',
-      '  color: #FFFFFF;',
-      '  border: none;',
-      '  padding: 12px 20px;',
-      '  border-radius: 999px;',
-      '  cursor: pointer;',
-      '  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;',
-      '  font-size: 13px;',
-      '  font-weight: 600;',
-      '  letter-spacing: 0.04em;',
-      '  box-shadow: 0 4px 14px rgba(1, 5, 94, 0.18);',
-      '  transition: transform .15s, box-shadow .15s, background .15s;',
-      '  display: inline-flex;',
-      '  align-items: center;',
-      '  gap: 8px;',
-      '}',
-      '.review-toggle-btn:hover {',
-      '  transform: translateY(-1px);',
-      '  background: #6804B5;',
-      '  box-shadow: 0 6px 20px rgba(1, 5, 94, 0.22);',
-      '}',
-      '.review-toggle-btn:active {',
-      '  transform: translateY(0);',
-      '}',
-      '@media print {',
-      '  .review-toggle-btn { display: none; }',
-      '}'
-    ].join('\n');
-    document.head.appendChild(style);
-
-    var cfg = window.TOUCHING_LIVES_CONTACT_CONFIG || {};
-    var labels = (cfg && cfg.REVIEW_LABELS) || {};
-
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'review-toggle-btn';
-    btn.setAttribute('data-review-skip', '');
-    btn.textContent = labels.toggleButton || 'Comments';
-    btn.title = labels.toggleButtonTitle || 'Open comment review mode';
-    btn.addEventListener('click', function () {
-      var url = new URL(window.location.href);
-      url.searchParams.set('review', '1');
-      window.location.href = url.toString();
-    });
-    document.body.appendChild(btn);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectEntryButton);
-  } else {
-    injectEntryButton();
-  }
-
-  // ----- (2) Widget activation (only when ?review=1) -----
-  if (!reviewActive) {
+  if (!active) {
+    var inject = function () {
+      if (document.querySelector('.review-toggle-btn')) return;
+      var st = document.createElement('style');
+      st.textContent = '.review-toggle-btn{position:fixed;bottom:20px;right:20px;z-index:9990;background:#084874;color:#fff;border:none;padding:12px 20px;border-radius:999px;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;letter-spacing:.04em;box-shadow:0 4px 14px rgba(31,32,36,.18);transition:transform .15s,box-shadow .15s,background .15s;display:inline-flex;align-items:center;gap:8px}.review-toggle-btn:hover{transform:translateY(-1px);background:#053454;box-shadow:0 6px 20px rgba(31,32,36,.22)}.review-toggle-btn:active{transform:translateY(0)}.review-toggle-btn::before{content:"\\1F4AC";font-size:14px;line-height:1}@media print{.review-toggle-btn{display:none}}';
+      document.head.appendChild(st);
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'review-toggle-btn'; b.setAttribute('data-review-skip', '');
+      b.title = L.toggleButtonTitle || 'Open comment review mode';
+      b.textContent = L.toggleButton || 'Comments';
+      b.addEventListener('click', function () {
+        var u = new URL(window.location.href); u.searchParams.set('review', '1'); window.location.href = u.toString();
+      });
+      document.body.appendChild(b);
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject); else inject();
     return;
   }
 
-  // Self-locating: figure out where this script lives so we can load
-  // siblings relative to it. document.currentScript is reliable in this
-  // synchronous top-level inline context.
-  var scriptEl = document.currentScript;
-  var basePath = '';
-  if (scriptEl && scriptEl.src) {
-    basePath = scriptEl.src.replace(/[^/]*$/, '');
-  }
-
-  function reviewFailed(reason, errorMessage) {
-    try {
-      window.dispatchEvent(new CustomEvent('review.failed', {
-        detail: {
-          pageSlug: derivePageSlug(),
-          failedAt: Date.now(),
-          reason: reason,
-          errorMessage: errorMessage || '',
-          recoverableHint: hintFor(reason)
-        }
-      }));
-    } catch (_) { /* silent */ }
-  }
-
-  function hintFor(reason) {
-    if (reason === 'config-missing') {
-      return 'Check that contact-form.config.js is loaded BEFORE review-bootstrap.js and that window.TOUCHING_LIVES_CONTACT_CONFIG is defined.';
-    }
-    if (reason === 'module-load-error') {
-      return 'Check the network panel for review-mode.js — likely a 404 or sub-path mismatch.';
-    }
-    if (reason === 'css-load-error') {
-      return 'Check the network panel for review-mode.css — likely a 404 or sub-path mismatch.';
-    }
-    return '';
-  }
-
-  function derivePageSlug() {
-    var path = window.location.pathname || '/';
-    path = path.replace(/\/index\.html?$/i, '');
-    if (path === '' || path === '/') return 'home';
-    path = path.replace(/^\/+|\/+$/g, '');
-    return path.replace(/\//g, '-');
-  }
-
-  // Config-missing fast-fail. The widget needs window.TOUCHING_LIVES_CONTACT_CONFIG
-  // (or its REVIEW_LABELS at minimum) before init. If it isn't there, the
-  // bootstrap aborts cleanly and emits review.failed.
-  if (!window.TOUCHING_LIVES_CONTACT_CONFIG) {
-    reviewFailed('config-missing', 'window.TOUCHING_LIVES_CONTACT_CONFIG is undefined.');
-    return;
-  }
-
-  // Load CSS first, then the module. We don't strictly need to await
-  // the stylesheet, but the module's first render is smoother if CSS
-  // arrives first; on slow networks the difference is visible.
-  function loadCss() {
-    return new Promise(function (resolve, reject) {
-      var link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = basePath + 'review-mode.css';
-      link.onload = function () { resolve(); };
-      link.onerror = function () { reject(new Error('css-load-error')); };
-      document.head.appendChild(link);
-    });
-  }
-
-  function loadModule() {
-    return import(basePath + 'review-mode.js');
-  }
-
-  // Flip the activation attribute. The CSS is scoped to
-  // [data-review-mode="on"] so styles only apply once this is set.
-  function activate() {
-    document.documentElement.setAttribute('data-review-mode', 'on');
-  }
-
-  loadCss()
-    .then(function () {
-      activate();
-      return loadModule();
-    })
-    .then(function (mod) {
-      if (typeof mod.init === 'function') {
-        return mod.init({
-          basePath: basePath,
-          config: window.TOUCHING_LIVES_CONTACT_CONFIG,
-          configGlobalName: 'TOUCHING_LIVES_CONTACT_CONFIG'
-        });
-      }
-    })
-    .catch(function (err) {
-      var reason = (err && err.message === 'css-load-error') ? 'css-load-error' : 'module-load-error';
-      reviewFailed(reason, err && err.message ? err.message : String(err));
-    });
-
+  document.documentElement.setAttribute('data-review-mode', 'on');
+  var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'review-mode.css'; document.head.appendChild(css);
+  var js = document.createElement('script'); js.src = 'review-mode.js'; document.body.appendChild(js);
 })();

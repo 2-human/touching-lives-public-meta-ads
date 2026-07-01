@@ -1,707 +1,89 @@
-/* public/meta-ads/review-mode.css
- *
- * Adopted 2026-07-01 from glinda/public/method/review-mode.css (glinda
- * re-emitted 2026-05-12 in the prota-alignment pass; see glinda's own
- * composition manifest for full history). Cross-project adoption —
- * glinda's mature composed output copied verbatim. Purple/indigo brand
- * tokens are kept as-is for this first cut; visual differentiation from
- * Touching Lives' brand navy is acceptable. Re-toning to touching-lives
- * navy is a future pass, not this task.
- *
- * Variation recorded at .composition-manifest.md alongside this file.
- *
- * Source-of-truth: do NOT hand-edit. Re-adopt via the source (glinda).
- */
+/* review-mode.css — all widget styling scoped under [data-review-mode="on"].
+ * Adopted 2026-07-01 from credo/public/meta-ads-preview/review-mode.css.
+ * Tokens resolved to Touching Lives brand: primary-deep #084874 (deep navy,
+ * confirmed from live-site CSS), darker #053454, accent-cool #C5CAE9
+ * (Credo's lavender kept as neutral cool), neutral-deep #1f2330, amber
+ * #d9822b for local-only badge. */
+[data-review-mode="on"]{--rw-deep:#084874;--rw-dark:#053454;--rw-cool:#C5CAE9;--rw-ink:#1f2330;--rw-surf:#fff;--rw-amber:#d9822b}
+[data-review-mode="on"] body{padding-top:46px}
 
-/* =====================================================================
- * Design tokens (resolved at composition; values from glinda's overrides)
- * ===================================================================== */
+/* commentable elements */
+[data-review-mode="on"] [data-comment-id]{outline:1px dashed rgba(8,72,116,.35);outline-offset:2px;position:relative}
+[data-review-mode="on"] [data-comment-id].has-comment{outline:1.5px solid rgba(8,72,116,.7)}
+[data-review-mode="on"] [data-comment-id].rw-spot{outline:2px solid var(--rw-deep);animation:rwpulse 1.1s ease}
+[data-review-mode="on"] [data-comment-id].rw-active-anchor{outline:2.5px solid var(--rw-deep);outline-offset:2px;box-shadow:0 0 0 4px rgba(8,72,116,.18)}
+@keyframes rwpulse{0%{box-shadow:0 0 0 0 rgba(8,72,116,.5)}100%{box-shadow:0 0 0 14px rgba(8,72,116,0)}}
 
-html[data-review-mode="on"] {
-  /* Colors — Glinda overrides (purple / coral / cyan / indigo) inherited */
-  --review-primary-deep: #8705E4;
-  --review-primary-darker: #6804B5;
-  --review-accent-warm: #FF8B5C;
-  --review-accent-cool: #53DEFF;
-  --review-feedback-amber: #FFC857;
-  --review-feedback-red: #E63946;
-  --review-neutral-deep: #01055E;
-  --review-text-muted: #434343;
-  --review-text-soft: #6B7280;
-  --review-text-faint: #97A0B1;
-  --review-surface-base: #FFFFFF;
-  --review-surface-soft: #FAFBFD;
-  --review-surface-tint: #F2F4F9;
-  --review-surface-tint-2: #E0E5EE;
-  --review-rule: #C4CCDA;
-  --review-surface-overlay: rgba(1, 5, 94, 0.5);
+/* floating add-comment pill (single, follows the deepest hovered element) */
+[data-review-mode="on"] .review-floating-pill{position:fixed;z-index:9997;display:none;background:var(--rw-deep);color:#fff;border:none;border-radius:999px;font:600 12px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding:6px 11px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.28)}
+[data-review-mode="on"] .review-floating-pill:hover{background:var(--rw-dark)}
 
-  /* Derived utility colors */
-  --review-accent-warm-low: rgba(255, 139, 92, 0.35);
-  --review-accent-cool-low: rgba(83, 222, 255, 0.35);
-  --review-replacement-bg: #FFF1EA;
-  --review-replacement-text: #5C2810;
+/* banner */
+[data-review-mode="on"] .review-banner{position:fixed;top:0;left:0;right:0;height:46px;z-index:9999;background:var(--rw-ink);color:#fff;display:flex;align-items:center;gap:14px;padding:0 16px;font:600 13.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 1px 6px rgba(0,0,0,.2)}
+[data-review-mode="on"] .review-banner .rw-title{font-family:Georgia,serif;color:#fff}
+[data-review-mode="on"] .review-banner .rw-local{background:var(--rw-amber);color:#fff;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600}
+[data-review-mode="on"] .review-banner .rw-spacer{flex:1}
+[data-review-mode="on"] .review-banner .rw-name{opacity:.85;font-weight:400;font-size:12.5px}
+[data-review-mode="on"] .review-banner button{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:6px;padding:6px 12px;font:inherit;cursor:pointer}
+[data-review-mode="on"] .review-banner button:hover{background:rgba(255,255,255,.12)}
 
-  /* Typography — library defaults */
-  --review-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
-  --review-font-mono: ui-monospace, SF Mono, monospace;
+/* sidebar */
+[data-review-mode="on"] .review-sidebar{position:fixed;top:46px;right:0;bottom:0;width:330px;z-index:9998;background:var(--rw-surf);border-left:1px solid #d9dbe0;box-shadow:-2px 0 12px rgba(0,0,0,.08);display:flex;flex-direction:column;transition:transform .2s}
+[data-review-mode="on"] .review-sidebar.rw-collapsed{transform:translateX(330px)}
+[data-review-mode="on"] .review-sidebar h3{margin:0;padding:14px 16px;font:700 14px/1 -apple-system,sans-serif;border-bottom:1px solid #eceef0;display:flex;justify-content:space-between;align-items:center}
+[data-review-mode="on"] .review-sidebar h3 .rw-count{color:var(--rw-deep)}
+[data-review-mode="on"] .review-list{flex:1;overflow-y:auto;padding:8px}
+[data-review-mode="on"] .review-empty{color:#65676b;font-size:13px;padding:18px 12px;text-align:center}
+[data-review-mode="on"] .review-row{border:1px solid #eceef0;border-radius:8px;padding:10px 11px;margin-bottom:8px;cursor:pointer;background:#fff}
+[data-review-mode="on"] .review-row:hover{border-color:var(--rw-cool);background:#f7faff}
+[data-review-mode="on"] .review-row.rw-selected{border-color:var(--rw-deep);background:#eaf3fb;box-shadow:inset 3px 0 0 var(--rw-deep)}
+[data-review-mode="on"] .review-row .rw-meta{font-size:11px;color:#65676b;margin-bottom:4px;display:flex;gap:6px}
+[data-review-mode="on"] .review-row .rw-meta b{color:var(--rw-ink)}
+[data-review-mode="on"] .review-row .rw-body{font-size:13.5px;color:#1a1a1a;white-space:pre-wrap}
+[data-review-mode="on"] .review-row .rw-repl{margin-top:5px;font-size:12.5px;color:#1a6c3a;background:#eef7f0;border-left:3px solid #1a6c3a;padding:4px 7px;border-radius:3px}
+[data-review-mode="on"] .review-row .rw-anchor{margin-top:5px;font:11px ui-monospace,Menlo,monospace;color:#9aa0a6}
+[data-review-mode="on"] .review-row .rw-acts{margin-top:7px;display:flex;gap:8px}
+[data-review-mode="on"] .review-row .rw-acts button{background:none;border:none;color:#65676b;font:600 12px/1 sans-serif;cursor:pointer;padding:2px}
+[data-review-mode="on"] .review-row .rw-acts button:hover{color:var(--rw-deep);text-decoration:underline}
 
-  /* Layout */
-  --review-z-banner: 9999;
-  --review-z-sidebar: 9998;
-  --review-z-toggle: 9997;
-  --review-z-modal: 10000;
-  --review-z-toast: 10001;
-  --review-banner-height: 40px;
-  --review-sidebar-width: 360px;
-}
+/* modal */
+[data-review-mode="on"] .review-modal-overlay{position:fixed;inset:0;z-index:10000;background:rgba(31,32,36,.45);display:flex;align-items:center;justify-content:center;padding:20px}
+[data-review-mode="on"] .review-modal{background:#fff;border-radius:12px;width:100%;max-width:440px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+[data-review-mode="on"] .review-modal h4{margin:0 0 4px;font:700 16px/1.2 -apple-system,sans-serif}
+[data-review-mode="on"] .review-modal .rw-ctx{font-size:12px;color:#65676b;margin-bottom:12px;font-family:ui-monospace,Menlo,monospace}
+[data-review-mode="on"] .review-modal textarea{width:100%;border:1px solid #ccd0d5;border-radius:8px;padding:9px;font:14px -apple-system,sans-serif;resize:vertical;min-height:74px;margin-bottom:8px}
+[data-review-mode="on"] .review-modal .rw-modal-acts{display:flex;justify-content:flex-end;gap:8px;margin-top:4px}
+[data-review-mode="on"] .review-modal button{border-radius:8px;padding:9px 16px;font:600 14px/1 sans-serif;cursor:pointer;border:1px solid transparent}
+[data-review-mode="on"] .review-modal .rw-cancel{background:#e7e9ec;color:#1a1a1a}
+[data-review-mode="on"] .review-modal .rw-save{background:var(--rw-deep);color:#fff}
+[data-review-mode="on"] .review-modal .rw-save:hover{background:var(--rw-dark)}
+@media (max-width:900px){[data-review-mode="on"] .review-sidebar{width:84vw}}
 
-/* Body shifts: 40px down for banner, 360px left for sidebar gutter */
-html[data-review-mode="on"] body {
-  padding-right: var(--review-sidebar-width);
-  padding-top: var(--review-banner-height);
-}
-@media (max-width: 800px) {
-  html[data-review-mode="on"] body { padding-right: 0; }
-}
+/* status tabs */
+[data-review-mode="on"] .review-tabs{display:flex;border-bottom:1px solid #eceef0;background:#fafbfc}
+[data-review-mode="on"] .review-tabs button{flex:1;border:none;background:none;padding:9px 4px;font:600 12px/1 -apple-system,sans-serif;color:#65676b;cursor:pointer;border-bottom:2px solid transparent}
+[data-review-mode="on"] .review-tabs button:hover{color:#1a1a1a}
+[data-review-mode="on"] .review-tabs button.on{color:var(--rw-deep);border-bottom-color:var(--rw-deep)}
+[data-review-mode="on"] .review-tabs .rw-c{display:inline-block;min-width:16px;padding:0 4px;border-radius:8px;background:#e7e9ec;color:#65676b;font-size:10.5px;font-weight:700}
+[data-review-mode="on"] .review-tabs button.on .rw-c{background:var(--rw-deep);color:#fff}
 
-/* If host page has a sticky nav at top:0, push it past the banner */
-html[data-review-mode="on"] nav.top,
-html[data-review-mode="on"] header[role="banner"]:not(.review-banner) {
-  top: var(--review-banner-height);
-}
+/* status badge on each row */
+[data-review-mode="on"] .rw-badge{text-transform:uppercase;letter-spacing:.04em;font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:7px}
+[data-review-mode="on"] .rw-badge.rw-pending{background:#fdf0dc;color:#b9711b}
+[data-review-mode="on"] .rw-badge.rw-applied{background:#e7f3ea;color:#2f7d4e}
+[data-review-mode="on"] .rw-badge.rw-archived{background:#eceef0;color:#828a93}
 
-/* =====================================================================
- * CHROME RESET — establishes clean styling roots
- * ===================================================================== */
+/* applied-comment outline on the anchored element */
+[data-review-mode="on"] [data-comment-id].has-applied-comment{outline:1.5px solid rgba(47,125,78,.6)}
 
-html[data-review-mode="on"] .review-banner,
-html[data-review-mode="on"] .review-sidebar,
-html[data-review-mode="on"] .review-sidebar-toggle,
-html[data-review-mode="on"] .review-modal,
-html[data-review-mode="on"] .review-modal-backdrop,
-html[data-review-mode="on"] .review-toast,
-html[data-review-mode="on"] .review-pill,
-html[data-review-mode="on"] .review-pill-container {
-  all: revert;
-  font-family: var(--review-font-sans);
-  box-sizing: border-box;
-  line-height: 1.4;
-}
+/* per-action button tints */
+[data-review-mode="on"] .review-row .apply-btn:hover{color:#2f7d4e}
+[data-review-mode="on"] .review-row .archive-btn:hover{color:#828a93}
+[data-review-mode="on"] .review-row .restore-btn:hover{color:var(--rw-cool);filter:brightness(.6)}
+[data-review-mode="on"] .review-row .edit-btn:hover{color:var(--rw-deep)}
+[data-review-mode="on"] .review-row .delete-btn:hover{color:#c0392b}
 
-html[data-review-mode="on"] .review-banner *,
-html[data-review-mode="on"] .review-sidebar *,
-html[data-review-mode="on"] .review-sidebar-toggle *,
-html[data-review-mode="on"] .review-modal *,
-html[data-review-mode="on"] .review-toast *,
-html[data-review-mode="on"] .review-pill *,
-html[data-review-mode="on"] .review-pill-container * {
-  box-sizing: border-box;
-}
-
-/* =====================================================================
- * HAS-COMMENT OUTLINE — every anchored element
- * ===================================================================== */
-
-html[data-review-mode="on"] [data-comment-id] {
-  outline: 1px dashed var(--review-accent-warm-low);
-  outline-offset: 2px;
-  position: relative;
-  transition: outline 0.15s, box-shadow 0.3s;
-}
-
-html[data-review-mode="on"] [data-comment-id]:hover {
-  outline: 2px dashed var(--review-primary-deep);
-  outline-offset: 4px;
-}
-
-html[data-review-mode="on"] [data-comment-id].has-comment {
-  outline: 1px dashed var(--review-accent-warm-low);
-  outline-offset: 2px;
-}
-
-html[data-review-mode="on"] [data-comment-id].has-applied-comment {
-  outline: 1px dashed var(--review-accent-cool-low);
-  outline-offset: 2px;
-}
-
-/* =====================================================================
- * SPOTLIGHT — click-triggered, 1.5s pulse, prota-aligned timing
- * ===================================================================== */
-
-html[data-review-mode="on"] [data-comment-id].review-spotlit {
-  outline: 2px solid var(--review-accent-warm) !important;
-  outline-offset: 4px;
-  animation: review-spotlight-pulse 1.5s ease-out;
-}
-html[data-review-mode="on"] [data-comment-id].review-spotlit.has-applied-comment {
-  outline-color: var(--review-accent-cool) !important;
-  animation-name: review-spotlight-pulse-cool;
-}
-@keyframes review-spotlight-pulse {
-  0%   { box-shadow: 0 0 0 0    rgba(255, 139, 92, 0.45); }
-  50%  { box-shadow: 0 0 0 14px rgba(255, 139, 92, 0); }
-  100% { box-shadow: 0 0 0 0    rgba(255, 139, 92, 0); }
-}
-@keyframes review-spotlight-pulse-cool {
-  0%   { box-shadow: 0 0 0 0    rgba(83, 222, 255, 0.45); }
-  50%  { box-shadow: 0 0 0 14px rgba(83, 222, 255, 0); }
-  100% { box-shadow: 0 0 0 0    rgba(83, 222, 255, 0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html[data-review-mode="on"] [data-comment-id].review-spotlit {
-    animation: none;
-  }
-}
-
-/* =====================================================================
- * HOVER PILL — 22px circle with `+`, deepest-only
- * ===================================================================== */
-
-html[data-review-mode="on"] .review-pill {
-  display: none;
-}
-
-html[data-review-mode="on"] .review-pill-container {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  z-index: 100;
-  pointer-events: none;
-}
-
-html[data-review-mode="on"] [data-comment-id]:hover:not(:has([data-comment-id]:hover)) > .review-pill-container > .review-pill,
-html[data-review-mode="on"] [data-comment-id]:hover:not(:has([data-comment-id]:hover)) .review-pill-container > .review-pill {
-  display: inline-flex;
-}
-
-html[data-review-mode="on"] .review-pill {
-  pointer-events: auto;
-  background: var(--review-primary-deep);
-  color: var(--review-surface-base);
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  font-size: 15px;
-  line-height: 1;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.15s;
-  border: 2px solid var(--review-surface-base);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  user-select: none;
-  font-family: inherit;
-  font-weight: 600;
-  padding: 0;
-}
-
-html[data-review-mode="on"] .review-pill.has-comment {
-  background: var(--review-accent-warm);
-}
-html[data-review-mode="on"] .review-pill.has-applied-comment {
-  background: var(--review-accent-cool);
-}
-html[data-review-mode="on"] .review-pill:hover {
-  transform: scale(1.1);
-}
-
-/* =====================================================================
- * BUTTONS — BEM variants, prota-aligned padding + radius
- * ===================================================================== */
-
-html[data-review-mode="on"] .review-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 18px;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.2;
-  cursor: pointer;
-  background: transparent;
-  color: inherit;
-  text-decoration: none;
-  user-select: none;
-}
-
-html[data-review-mode="on"] .review-btn--primary {
-  background: var(--review-primary-deep);
-  color: var(--review-surface-base);
-  border-color: var(--review-primary-deep);
-}
-html[data-review-mode="on"] .review-btn--primary:hover:not(:disabled) {
-  background: var(--review-primary-darker);
-  border-color: var(--review-primary-darker);
-}
-
-html[data-review-mode="on"] .review-btn--secondary {
-  background: var(--review-surface-tint-2);
-  color: var(--review-neutral-deep);
-  border-color: var(--review-surface-tint-2);
-}
-html[data-review-mode="on"] .review-btn--secondary:hover:not(:disabled) {
-  background: var(--review-rule);
-  border-color: var(--review-rule);
-}
-
-html[data-review-mode="on"] .review-btn--danger {
-  background: var(--review-surface-base);
-  color: var(--review-feedback-red);
-  border-color: var(--review-feedback-red);
-}
-html[data-review-mode="on"] .review-btn--danger:hover:not(:disabled) {
-  background: rgba(230, 57, 70, 0.08);
-}
-
-html[data-review-mode="on"] .review-btn:disabled,
-html[data-review-mode="on"] .review-btn[aria-busy="true"] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-html[data-review-mode="on"] .review-btn:focus-visible {
-  outline: 2px solid var(--review-accent-warm);
-  outline-offset: 2px;
-}
-
-/* =====================================================================
- * BANNER — gradient + dot pulse
- * ===================================================================== */
-
-html[data-review-mode="on"] .review-banner {
-  position: fixed;
-  top: 0; left: 0;
-  right: var(--review-sidebar-width, 0);
-  z-index: var(--review-z-banner);
-  background: linear-gradient(90deg, #8705E4 0%, #6804B5 100%);
-  color: var(--review-surface-base);
-  padding: 10px 20px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
-}
-@media (max-width: 800px) {
-  html[data-review-mode="on"] .review-banner { right: 0; }
-}
-html[data-review-mode="on"] .review-banner .dot {
-  display: inline-block;
-  width: 8px; height: 8px;
-  background: var(--review-accent-cool);
-  border-radius: 50%;
-  margin-right: 8px;
-  animation: review-banner-pulse 2s infinite;
-}
-@keyframes review-banner-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-html[data-review-mode="on"] .review-banner a {
-  color: var(--review-surface-base);
-  text-decoration: underline;
-  font-weight: 500;
-  margin-left: 16px;
-}
-html[data-review-mode="on"] .review-banner a:hover { opacity: 0.85; }
-
-/* =====================================================================
- * MODAL — 560px wide, backdrop blur
- * ===================================================================== */
-
-html[data-review-mode="on"] .review-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: var(--review-surface-overlay);
-  backdrop-filter: blur(4px);
-  z-index: var(--review-z-modal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  font-family: var(--review-font-sans);
-}
-html[data-review-mode="on"] .review-modal {
-  background: var(--review-surface-base);
-  border-radius: 12px;
-  padding: 28px;
-  width: 100%;
-  max-width: 560px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-  max-height: calc(100vh - 48px);
-  overflow-y: auto;
-}
-html[data-review-mode="on"] .review-modal h3 {
-  margin: 0 0 6px;
-  font-size: 17px;
-  color: var(--review-primary-deep);
-}
-html[data-review-mode="on"] .review-modal .anchor-info {
-  font-size: 12px;
-  color: var(--review-text-soft);
-  font-family: var(--review-font-mono);
-  margin-bottom: 18px;
-  padding: 8px 10px;
-  background: var(--review-surface-tint);
-  border-radius: 6px;
-  word-break: break-all;
-}
-html[data-review-mode="on"] .review-modal .anchor-preview {
-  font-size: 13px;
-  color: var(--review-text-muted);
-  margin-bottom: 18px;
-  font-style: italic;
-  border-left: 3px solid var(--review-rule);
-  padding-left: 12px;
-}
-html[data-review-mode="on"] .review-modal label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--review-neutral-deep);
-  margin: 14px 0 6px;
-}
-html[data-review-mode="on"] .review-modal label .opt {
-  font-weight: 400;
-  color: var(--review-text-faint);
-  font-size: 12px;
-}
-html[data-review-mode="on"] .review-modal textarea {
-  width: 100%;
-  border: 1px solid var(--review-rule);
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 1.5;
-  resize: vertical;
-  min-height: 70px;
-  box-sizing: border-box;
-}
-html[data-review-mode="on"] .review-modal textarea:focus {
-  outline: none;
-  border-color: var(--review-primary-deep);
-  box-shadow: 0 0 0 3px rgba(135, 5, 228, 0.15);
-}
-html[data-review-mode="on"] .review-modal .actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-  justify-content: flex-end;
-}
-html[data-review-mode="on"] .review-modal .error {
-  color: var(--review-feedback-red);
-  font-size: 13px;
-  margin-top: 10px;
-}
-
-/* =====================================================================
- * SIDEBAR — reserves right gutter; mobile slides in
- * ===================================================================== */
-
-html[data-review-mode="on"] .review-sidebar {
-  position: fixed;
-  top: 0; right: 0;
-  width: var(--review-sidebar-width, 360px);
-  height: 100vh;
-  background: var(--review-surface-base);
-  border-left: 1px solid var(--review-surface-tint-2);
-  z-index: var(--review-z-sidebar);
-  overflow-y: auto;
-  font-family: inherit;
-  font-size: 13px;
-  display: flex;
-  flex-direction: column;
-}
-@media (max-width: 800px) {
-  html[data-review-mode="on"] .review-sidebar {
-    transform: translateX(100%);
-    transition: transform 0.2s;
-  }
-  html[data-review-mode="on"] .review-sidebar.open {
-    transform: translateX(0);
-    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
-  }
-}
-html[data-review-mode="on"] .review-sidebar header {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--review-surface-tint-2);
-  font-weight: 600;
-  color: var(--review-primary-deep);
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-html[data-review-mode="on"] .review-sidebar header .count {
-  color: var(--review-text-faint);
-  font-weight: 400;
-  font-size: 12px;
-}
-html[data-review-mode="on"] .review-sidebar .filter-row {
-  padding: 8px 18px;
-  display: flex;
-  gap: 6px;
-  border-bottom: 1px solid var(--review-surface-tint-2);
-}
-html[data-review-mode="on"] .review-sidebar .filter-row button {
-  border: 1px solid var(--review-rule);
-  background: var(--review-surface-base);
-  border-radius: 5px;
-  padding: 4px 10px;
-  font-size: 12px;
-  cursor: pointer;
-  color: var(--review-text-muted);
-  font-family: inherit;
-}
-html[data-review-mode="on"] .review-sidebar .filter-row button.active {
-  background: var(--review-primary-deep);
-  color: var(--review-surface-base);
-  border-color: var(--review-primary-deep);
-}
-html[data-review-mode="on"] .review-sidebar .empty {
-  padding: 32px 24px;
-  text-align: center;
-  color: var(--review-text-faint);
-}
-html[data-review-mode="on"] .review-sidebar .comments {
-  flex: 1;
-  overflow-y: auto;
-}
-
-/* =====================================================================
- * GROUP CONTAINER (comments grouped by anchor)
- * ===================================================================== */
-
-html[data-review-mode="on"] .review-group {
-  border-bottom: 4px solid var(--review-surface-tint-2);
-}
-html[data-review-mode="on"] .review-group:last-child { border-bottom: none; }
-
-html[data-review-mode="on"] .review-group-header {
-  padding: 12px 18px;
-  background: var(--review-surface-tint);
-  border-left: 3px solid var(--review-primary-deep);
-  cursor: pointer;
-  transition: background 0.12s;
-}
-html[data-review-mode="on"] .review-group-header:hover {
-  background: var(--review-surface-tint-2);
-}
-html[data-review-mode="on"] .review-group-header .anchor {
-  font-family: var(--review-font-mono);
-  font-size: 11px;
-  color: var(--review-text-muted);
-  word-break: break-all;
-}
-html[data-review-mode="on"] .review-group-header .anchor-preview {
-  margin-top: 5px;
-  font-size: 12px;
-  font-style: italic;
-  color: var(--review-neutral-deep);
-  line-height: 1.45;
-  border-left: 2px solid var(--review-rule);
-  padding-left: 8px;
-}
-html[data-review-mode="on"] .review-group-header .group-count {
-  margin-top: 6px;
-  font-size: 11px;
-  color: var(--review-primary-deep);
-  font-weight: 600;
-  text-transform: lowercase;
-  letter-spacing: 0.04em;
-}
-html[data-review-mode="on"] .review-group-header .anchor-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-html[data-review-mode="on"] .review-comment {
-  padding: 12px 18px 12px 30px;
-  border-bottom: 1px solid var(--review-surface-tint);
-  cursor: pointer;
-}
-html[data-review-mode="on"] .review-group .review-comment:last-child { border-bottom: none; }
-html[data-review-mode="on"] .review-comment:hover { background: var(--review-surface-soft); }
-html[data-review-mode="on"] .review-comment .anchor {
-  font-family: var(--review-font-mono);
-  font-size: 11px;
-  color: var(--review-text-faint);
-}
-html[data-review-mode="on"] .review-comment .text {
-  margin-top: 4px;
-  color: var(--review-neutral-deep);
-  line-height: 1.45;
-}
-html[data-review-mode="on"] .review-comment .replacement {
-  margin-top: 6px;
-  padding: 6px 8px;
-  background: var(--review-replacement-bg);
-  border-radius: 4px;
-  font-size: 12px;
-  color: var(--review-replacement-text);
-  border-left: 3px solid var(--review-accent-warm);
-}
-html[data-review-mode="on"] .review-comment .meta {
-  margin-top: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-  color: var(--review-text-soft);
-}
-html[data-review-mode="on"] .review-comment.archived .text { color: var(--review-text-faint); }
-html[data-review-mode="on"] .review-comment.archived { opacity: 0.75; }
-html[data-review-mode="on"] .review-comment.applied { background: rgba(83, 222, 255, 0.04); }
-
-/* Status badge in group header */
-html[data-review-mode="on"] .group-status {
-  font-family: var(--review-font-sans);
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 3px 8px;
-  border-radius: 3px;
-  white-space: nowrap;
-}
-html[data-review-mode="on"] .group-status.pending {
-  background: var(--review-replacement-bg);
-  color: var(--review-replacement-text);
-}
-html[data-review-mode="on"] .group-status.applied {
-  background: rgba(83, 222, 255, 0.18);
-  color: var(--review-neutral-deep);
-}
-
-/* Group footer — "Mark as done" button */
-html[data-review-mode="on"] .review-group-footer {
-  padding: 10px 18px 14px 30px;
-  background: var(--review-surface-soft);
-  border-top: 1px dashed var(--review-rule);
-}
-html[data-review-mode="on"] .review-group-footer .archive-group-btn {
-  width: 100%;
-  padding: 8px 12px;
-  background: var(--review-primary-deep);
-  color: var(--review-surface-base);
-  border: none;
-  border-radius: 4px;
-  font-family: var(--review-font-sans);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.12s;
-}
-html[data-review-mode="on"] .review-group-footer .archive-group-btn:hover {
-  background: var(--review-primary-darker);
-}
-html[data-review-mode="on"] .review-group-footer .archive-group-btn:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-html[data-review-mode="on"] .review-sidebar-toggle {
-  position: fixed;
-  top: 50px;
-  right: 0;
-  z-index: var(--review-z-toggle);
-  background: var(--review-primary-deep);
-  color: var(--review-surface-base);
-  border: none;
-  padding: 10px 8px;
-  border-radius: 6px 0 0 6px;
-  cursor: pointer;
-  font-size: 12px;
-  writing-mode: vertical-lr;
-  text-orientation: mixed;
-  font-family: inherit;
-}
-@media (min-width: 801px) {
-  html[data-review-mode="on"] .review-sidebar-toggle { display: none; }
-}
-
-/* =====================================================================
- * TOAST — single center-bottom, slide-up
- * ===================================================================== */
-
-html[data-review-mode="on"] .review-toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--review-primary-deep);
-  color: var(--review-surface-base);
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 13px;
-  z-index: var(--review-z-toast);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  font-family: inherit;
-  animation: review-toast-in 0.2s, review-toast-out 0.2s 2.6s forwards;
-}
-@keyframes review-toast-in { from { transform: translate(-50%, 20px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
-@keyframes review-toast-out { to { transform: translate(-50%, 20px); opacity: 0; } }
-
-/* =====================================================================
- * COMMENT-ROW ACTION BUTTONS (.edit-btn / .delete-btn / .restore-btn / .apply-btn)
- * ===================================================================== */
-
-html[data-review-mode="on"] .review-comment .actions {
-  margin-top: 10px;
-  display: flex;
-  gap: 6px;
-}
-html[data-review-mode="on"] .review-comment .actions button {
-  flex: 1;
-  padding: 6px 8px;
-  font-size: 12px;
-  border-radius: 5px;
-  border: 1px solid var(--review-rule);
-  background: var(--review-surface-base);
-  color: var(--review-neutral-deep);
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 500;
-  transition: all 0.15s;
-}
-html[data-review-mode="on"] .review-comment .actions button:hover {
-  border-color: var(--review-primary-deep);
-  color: var(--review-primary-deep);
-}
-html[data-review-mode="on"] .review-comment .actions button.apply-btn:hover {
-  background: rgba(83, 222, 255, 0.12);
-  border-color: var(--review-accent-cool);
-  color: var(--review-neutral-deep);
-}
-html[data-review-mode="on"] .review-comment .actions button.edit-btn:hover {
-  background: rgba(135, 5, 228, 0.06);
-  border-color: var(--review-primary-deep);
-  color: var(--review-primary-deep);
-}
-html[data-review-mode="on"] .review-comment .actions button.delete-btn:hover {
-  background: rgba(230, 57, 70, 0.08);
-  border-color: var(--review-feedback-red);
-  color: var(--review-feedback-red);
-}
-html[data-review-mode="on"] .review-comment .actions button.restore-btn:hover {
-  background: var(--review-surface-tint);
-  border-color: var(--review-text-muted);
-  color: var(--review-neutral-deep);
-}
-html[data-review-mode="on"] .review-comment .actions button:disabled {
-  opacity: 0.5;
-  cursor: wait;
-}
-html[data-review-mode="on"] .review-comment.archived .actions button {
-  background: var(--review-surface-soft);
-}
+/* merged Open/Resolved state */
+[data-review-mode="on"] .rw-badge.rw-resolved{background:#e7f3ea;color:#2f7d4e}
+[data-review-mode="on"] .review-row .rw-resolution{margin-top:5px;font-size:12.5px;color:#2f7d4e;background:#eef7f0;border-left:3px solid #2f7d4e;padding:4px 7px;border-radius:3px}
+[data-review-mode="on"] .review-row .resolve-btn:hover{color:#2f7d4e}
