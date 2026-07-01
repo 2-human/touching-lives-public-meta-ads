@@ -19,6 +19,19 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .review-widget-hint{background:#e8f4ff;border:1px solid #99c7f0;padding:10px 14px;border-radius:6px;margin:16px 0;font-size:13px;color:#143866}
 .review-widget-hint code{background:#d6e6f5;padding:1px 4px;border-radius:3px}
 
+/* Variant switcher (Credo-shape dirbar) */
+.dirbar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#f7f8fa;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-wrap:wrap;font-size:12px}
+.dirbar .dirlbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.dirbar button{border:1px solid var(--border);background:#fff;color:var(--muted);border-radius:14px;padding:3px 10px;font-size:12px;cursor:pointer;font-family:inherit}
+.dirbar button.on{background:#084874;border-color:#084874;color:#fff;font-weight:600}
+.dirbar .modetabs{display:inline-flex;gap:4px;padding-right:8px;border-right:1px solid var(--border)}
+.dirbar .imgctl{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.dirbar .ratiosel{font:12px inherit;color:#1a1a1a;padding:3px 6px;border:1px solid var(--border);border-radius:7px;background:#fff;cursor:pointer}
+.variants-container{background:#000;position:relative;display:flex;justify-content:center;align-items:center;min-height:120px}
+.variants-container img,.variants-container video{width:100%;display:block;max-height:680px;object-fit:contain}
+.variants-container video{background:#000}
+.variants-container[data-comment-target]:hover{outline:2px solid #084874;outline-offset:-2px}
+
 .container{max-width:680px;margin:0 auto;padding:20px 16px}
 .back-link{color:var(--brand);text-decoration:none;font-size:14px;display:inline-block;margin-bottom:16px}
 .back-link:hover{text-decoration:underline}
@@ -132,6 +145,84 @@ header.page-hdr p{margin:0;color:var(--muted)}
   </div>
 </div>
 
+<script>
+(function(){
+  var RATIO_FILE = {'1x1':'1080x1080','4x5':'1080x1350','9x16':'1080x1920','1_91x1':'1200x628'};
+  var RATIO_LBL  = {'1x1':'1:1','4x5':'4:5','9x16':'9:16','1_91x1':'1.91:1'};
+  var RVN = function(){ if(window.__rwRefresh) window.__rwRefresh(); };
+
+  document.querySelectorAll('.variants-container').forEach(function(zone){
+    var slug = zone.dataset.slug;
+    var version = zone.dataset.version;
+    var basePrefix = zone.dataset.basePrefix || '';
+    var img = zone.querySelector('.v-img');
+    var vid = zone.querySelector('.v-vid');
+    // Find the sibling dirbar (marked with matching data-for)
+    var dirbar = document.querySelector('.dirbar[data-for="' + slug + '"]');
+    if(!dirbar) return;
+    var imgctl = dirbar.querySelector('.imgctl');
+    var ratioSel = dirbar.querySelector('.ratiosel');
+    var state = {mode:'image', ratio:'1x1'};
+
+    function paint(){
+      if(state.mode === 'video'){
+        img.style.display = 'none';
+        vid.style.display = 'block';
+        imgctl.style.display = 'none';
+        var pp = vid.play(); if(pp && pp.catch) pp.catch(function(){});
+        zone.setAttribute('data-comment-id', slug + '-cr-video');
+        zone.setAttribute('data-variant-note', 'Video · 9:16 · 3s');
+      } else {
+        vid.pause();
+        vid.style.display = 'none';
+        img.style.display = 'block';
+        imgctl.style.display = '';
+        var file = RATIO_FILE[state.ratio];
+        img.src = basePrefix + slug + '/' + version + '/' + slug + '-' + file + '.png';
+        zone.setAttribute('data-comment-id', slug + '-cr-image');
+        zone.setAttribute('data-variant-note', 'Photo · ' + RATIO_LBL[state.ratio]);
+      }
+      RVN();
+    }
+
+    dirbar.querySelectorAll('.mode').forEach(function(b){
+      b.addEventListener('click', function(ev){
+        ev.preventDefault(); ev.stopPropagation();
+        state.mode = b.dataset.mode;
+        dirbar.querySelectorAll('.mode').forEach(function(x){ x.classList.toggle('on', x === b); });
+        paint();
+      });
+    });
+    if(ratioSel){
+      ratioSel.addEventListener('change', function(e){
+        state.ratio = e.target.value;
+        paint();
+      });
+      // Prevent select clicks from bubbling into any parent link
+      ratioSel.addEventListener('click', function(e){ e.stopPropagation(); });
+    }
+    // Keep the initial data-comment-id/note in sync with the render (belt-and-braces)
+    zone._rwState = state;
+    zone._rwPaint = paint;
+  });
+
+  /* __rwReveal — the widget calls this when a comment row is clicked; we flip
+   * the mode/ratio so the commented variant is on screen, then return the zone. */
+  window.__rwReveal = function(anchor){
+    var m;
+    if((m = anchor.match(/^(.+)-cr-(image|video)$/))){
+      var zone = document.querySelector('.variants-container[data-slug="' + m[1] + '"]');
+      if(!zone) return null;
+      var dirbar = document.querySelector('.dirbar[data-for="' + m[1] + '"]');
+      if(!dirbar) return zone;
+      var btn = dirbar.querySelector('.mode[data-mode="' + m[2] + '"]');
+      if(btn) btn.click();
+      return zone;
+    }
+    return document.querySelector('[data-comment-id="' + anchor + '"]');
+  };
+})();
+</script>
 <script src="../review.config.js" defer></script>
 <script src="../review-bootstrap.js" defer></script>
 </body></html>
