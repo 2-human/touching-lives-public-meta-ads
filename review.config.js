@@ -8,8 +8,11 @@
  * (localStorage) — fine for solo review, but NOT shared. The banner shows a
  * "Local-only" badge when running in that mode.
  *
- * Adopted 2026-07-01 from credo/public/meta-ads-preview/review.config.js.
- * Labels rewritten for the ad-review context. See .composition-manifest.md.
+ * Composed from canonical library/features/review-widget/ (light cut) — see
+ * .composition-manifest.md for source files + commit dates. credo's
+ * public/meta-ads-preview/ is the sibling light-cut instance (not the source).
+ * Project edits: config global TOUCHING_LIVES_REVIEW_CONFIG; labels for the
+ * ad-review context.
  */
 window.TOUCHING_LIVES_REVIEW_CONFIG = {
   FIREBASE_CONFIG: {

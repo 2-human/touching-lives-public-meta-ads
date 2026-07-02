@@ -2,12 +2,15 @@
  * No ?review=1  -> only a floating entry button (no widget chrome, no backend).
  * ?review=1     -> sets data-review-mode=on, loads review-mode.css + review-mode.js.
  *
- * Adopted 2026-07-01 from credo/public/meta-ads-preview/review-bootstrap.js
- * with two project-specific edits: (a) config global renamed to
- * TOUCHING_LIVES_REVIEW_CONFIG per FEATURE.md convention; (b) toggle-button
- * palette swapped from Credo red to Touching Lives deep-navy #084874 /
- * darker #053454. Everything else is Credo verbatim (Open/Resolved tabs,
- * reviewer name prompt, localStorage fallback).
+ * Composed from canonical library/features/review-widget/ (light cut; see
+ * inert-entry-button.md + .composition-manifest.md). credo's
+ * public/meta-ads-preview/ is the sibling light-cut instance (not the source).
+ * Project edits: (a) config global TOUCHING_LIVES_REVIEW_CONFIG per FEATURE.md
+ * convention; (b) toggle-button palette -> Touching Lives deep-navy #084874 /
+ * #053454; (c) TL-SPECIFIC: widget assets resolved relative to THIS bootstrap
+ * script's src (not the page), because TL detail pages live at
+ * /details/{slug}.html while the widget files sit at the mirror root — bare
+ * 'review-mode.css' would 404 from a detail page. See manifest "Deviations".
  */
 (function () {
   var cfg = window.TOUCHING_LIVES_REVIEW_CONFIG || {};

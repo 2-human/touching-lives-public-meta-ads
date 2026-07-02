@@ -3,10 +3,12 @@
  * two status tabs (Open/Resolved) per comment-lifecycle.md.
  * Persists via Firebase RTDB (/comments/{id}) or a localStorage fallback.
  *
- * Adopted 2026-07-01 from credo/public/meta-ads-preview/review-mode.js.
- * Project edits: (a) config global renamed to TOUCHING_LIVES_REVIEW_CONFIG;
- * (b) localStorage keys renamed touching_lives_reviewer /
- * touching_lives_review_comments. Everything else is Credo verbatim.
+ * Composed from canonical library/features/review-widget/ (light cut) — see
+ * .composition-manifest.md for the source atomics (variant-anchors,
+ * click-to-reveal, comment-lifecycle, css-isolation, firebase-rtdb-adapter)
+ * + commit dates. credo's public/meta-ads-preview/ is the sibling instance.
+ * Project edits: (a) config global TOUCHING_LIVES_REVIEW_CONFIG;
+ * (b) localStorage keys touching_lives_reviewer / touching_lives_review_comments.
  */
 const CFG = (window.TOUCHING_LIVES_REVIEW_CONFIG) || {};
 const L = Object.assign({

@@ -1,5 +1,7 @@
 /* review-mode.css — all widget styling scoped under [data-review-mode="on"].
- * Adopted 2026-07-01 from credo/public/meta-ads-preview/review-mode.css.
+ * Composed from canonical library/features/review-widget/ (light cut; css-isolation.md
+ * incl. the .rw- state-class registration). credo's public/meta-ads-preview/ is the
+ * sibling instance (not the source). See .composition-manifest.md for files + dates.
  * Tokens resolved to Touching Lives brand: primary-deep #084874 (deep navy,
  * confirmed from live-site CSS), darker #053454, accent-cool #C5CAE9
  * (Credo's lavender kept as neutral cool), neutral-deep #1f2330, amber
