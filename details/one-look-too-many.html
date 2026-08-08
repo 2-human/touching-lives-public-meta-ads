@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>One Look Too Many — Touching Lives Ad</title>
 <style>
 :root{--bg:#f0f2f5;--card:#fff;--text:#050505;--muted:#65676b;--border:#ced0d4;--brand:#1877f2;
@@ -114,6 +115,46 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .comments-section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px}
 .comments-section h2{margin:0 0 12px;font-size:16px}
 .comments-hint{color:var(--muted);font-size:13px;margin:0}
+
+/* ---- weekly cost-metric trend ---- */
+.trend{margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.trend h4{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}
+.trend-sub{text-transform:none;letter-spacing:0;font-weight:400;opacity:.8}
+.trend-empty{color:var(--muted);font-style:italic;font-size:13px;margin:0}
+.verdict{display:flex;gap:10px;align-items:flex-start;background:var(--stat-bg);
+  border:1px solid var(--border);border-left-width:3px;border-radius:6px;
+  padding:10px 12px;margin-bottom:12px;font-size:13px;line-height:1.45}
+.verdict .v-icon{font-size:14px;line-height:1.35}
+.v-detail{color:var(--muted)}
+.verdict.v-good{border-left-color:#006300} .verdict.v-good .v-icon{color:#006300}
+.verdict.v-bad{border-left-color:#d03b3b}  .verdict.v-bad .v-icon{color:#d03b3b}
+.verdict.v-none{border-left-color:var(--muted)} .verdict.v-none .v-icon{color:var(--muted)}
+.tchart{display:block;width:100%;height:auto;overflow:visible}
+.tchart .tg{stroke:var(--border);stroke-width:1}
+.tchart .tref{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4}
+.tchart .treft{fill:var(--muted);font-size:10px}
+.tchart .tyl{fill:var(--muted);font-size:10px;text-anchor:end}
+.tchart .txl{fill:var(--muted);font-size:10px}
+.tchart .tline{fill:none;stroke:#1877f2;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.tchart .tdot{fill:#1877f2;stroke:var(--stat-bg);stroke-width:2}
+.tchart .tzero{fill:none;stroke:var(--muted);stroke-width:1.5}
+.tchart .ttip{opacity:0;pointer-events:none;transition:opacity .12s}
+.tchart .ttip rect{fill:#050505;opacity:.92}
+.tchart .ttt{fill:#fff;font-size:10px}
+.tchart .ttt-h{font-weight:700;font-size:11px}
+.tchart .tpt:hover .ttip,.tchart .tpt:focus-within .ttip{opacity:1}
+.tchart .tpt{cursor:crosshair}
+.tchart .tpt:focus{outline:none}
+.tchart .tpt:focus-visible .tdot,.tchart .tpt:focus-visible .tzero{stroke:#050505;stroke-width:2}
+.tchart .thit{fill:transparent;pointer-events:all}
+.tchart .thit{fill:transparent;pointer-events:all}
+.trend-note{color:var(--muted);font-size:11.5px;line-height:1.5;margin:8px 0 0}
+.trend-table{margin-top:10px;font-size:12px}
+.trend-table summary{cursor:pointer;color:var(--brand);font-size:12px}
+.trend-table table{border-collapse:collapse;margin-top:8px;width:100%}
+.trend-table th,.trend-table td{border:1px solid var(--border);padding:4px 8px;text-align:right}
+.trend-table th:first-child,.trend-table td:first-child{text-align:left}
+.trend-table th{background:var(--stat-bg);color:var(--muted);font-weight:600}
 </style>
 </head><body>
 <div class="container">
@@ -207,6 +248,23 @@ header.page-hdr p{margin:0;color:var(--muted)}
           <div class="metric-box"><div class="metric-value cpl-bad">$2.89</div><div class="metric-label">Cost per lead</div></div>
           <div class="metric-box"><div class="metric-value">11.4%</div><div class="metric-label">Click-through rate</div></div>
         </div>
+    
+    <div class="trend">
+      <h4>Weekly CPL trend <span class="trend-sub">since this ad went live</span></h4>
+      <div class="verdict v-none"><span class="v-icon" aria-hidden="true">○</span>
+        <span><strong>Not enough volume to judge</strong><br><span class="v-detail">6 leads in the last 3 weeks of delivery — below the 10 needed for a stable read.</span></span></div>
+      <svg class="tchart" viewBox="0 0 640 168" role="img"
+           aria-label="Weekly CPL for this ad against the $1.50 CPL cut line">
+        <line class="tg" x1="52" y1="138.0" x2="544" y2="138.0"/><text class="tyl" x="44" y="141.5">$0.00</text><line class="tg" x1="52" y1="76.0" x2="544" y2="76.0"/><text class="tyl" x="44" y="79.5">$3.75</text><line class="tg" x1="52" y1="14.0" x2="544" y2="14.0"/><text class="tyl" x="44" y="17.5">$7.50</text><line class="tref" x1="52" y1="113.2" x2="544" y2="113.2"/><text class="treft" x="552" y="116.7">$1.50 CPL cut line</text><polyline class="tline" points="52.0,95.6 113.5,53.0 175.0,112.6 236.5,102.8 298.0,48.4 359.5,107.2"/><g class="tpt" tabindex="0"><circle class="thit" cx="52.0" cy="95.6" r="14"/><circle class="tdot" cx="52.0" cy="95.6" r="7.0"/><title>2026-05-05: $2.56 · 10 leads · $25.62</title><g class="ttip"><rect x="62.0" y="41.64160000000001" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="70.0" y="56.64160000000001">2026-05-05</text><text class="ttt" x="70.0" y="69.64160000000001">$2.56 CPL</text><text class="ttt" x="70.0" y="82.64160000000001">10 leads · $25.62</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="113.5" cy="53.0" r="14"/><circle class="tdot" cx="113.5" cy="53.0" r="4.8"/><title>2026-05-12: $5.14 · 2 leads · $10.28</title><g class="ttip"><rect x="123.5" y="2" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="131.5" y="17">2026-05-12</text><text class="ttt" x="131.5" y="30">$5.14 CPL</text><text class="ttt" x="131.5" y="43">2 leads · $10.28</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="175.0" cy="112.6" r="14"/><circle class="tdot" cx="175.0" cy="112.6" r="5.5"/><title>2026-05-19: $1.53 · 4 leads · $6.14</title><g class="ttip"><rect x="185.0" y="58.621333333333325" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="193.0" y="73.62133333333333">2026-05-19</text><text class="ttt" x="193.0" y="86.62133333333333">$1.53 CPL</text><text class="ttt" x="193.0" y="99.62133333333333">4 leads · $6.14</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="236.5" cy="102.8" r="14"/><circle class="tdot" cx="236.5" cy="102.8" r="4.3"/><title>2026-05-26: $2.13 · 1 leads · $2.13</title><g class="ttip"><rect x="246.5" y="48.784000000000006" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="254.5" y="63.784000000000006">2026-05-26</text><text class="ttt" x="254.5" y="76.784">$2.13 CPL</text><text class="ttt" x="254.5" y="89.784">1 leads · $2.13</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="298.0" cy="48.4" r="14"/><circle class="tdot" cx="298.0" cy="48.4" r="4.8"/><title>2026-06-02: $5.42 · 2 leads · $10.84</title><g class="ttip"><rect x="308.0" y="2" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="316.0" y="17">2026-06-02</text><text class="ttt" x="316.0" y="30">$5.42 CPL</text><text class="ttt" x="316.0" y="43">2 leads · $10.84</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="359.5" cy="107.2" r="14"/><circle class="tdot" cx="359.5" cy="107.2" r="4.8"/><title>2026-06-09: $1.86 · 2 leads · $3.72</title><g class="ttip"><rect x="369.5" y="53.24799999999999" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="377.5" y="68.24799999999999">2026-06-09</text><text class="ttt" x="377.5" y="81.24799999999999">$1.86 CPL</text><text class="ttt" x="377.5" y="94.24799999999999">2 leads · $3.72</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="421.0" cy="138.0" r="14"/><circle class="tzero" cx="421.0" cy="138.0" r="3"/><title>2026-06-16: $2.72 spent, no leads — CPL undefined</title><g class="ttip"><rect x="261.0" y="84.0" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="269.0" y="99.0">2026-06-16</text><text class="ttt" x="269.0" y="112.0">CPL undefined</text><text class="ttt" x="269.0" y="125.0">0 leads · $2.72</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="482.5" cy="98.7" r="14"/><circle class="tdot" cx="482.5" cy="98.7" r="4.8"/><title>2026-06-23: $2.38 · 2 leads · $4.75</title><g class="ttip"><rect x="322.5" y="44.733333333333334" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="330.5" y="59.733333333333334">2026-06-23</text><text class="ttt" x="330.5" y="72.73333333333333">$2.38 CPL</text><text class="ttt" x="330.5" y="85.73333333333333">2 leads · $4.75</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="544.0" cy="138.0" r="14"/><circle class="tzero" cx="544.0" cy="138.0" r="3"/><title>2026-06-30: $0.17 spent, no leads — CPL undefined</title><g class="ttip"><rect x="384.0" y="84.0" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="392.0" y="99.0">2026-06-30</text><text class="ttt" x="392.0" y="112.0">CPL undefined</text><text class="ttt" x="392.0" y="125.0">0 leads · $0.17</text></g></g><text class="txl" x="52.0" y="158" text-anchor="start">2026-05-05</text><text class="txl" x="544.0" y="158" text-anchor="end">2026-06-30</text>
+      </svg>
+      <p class="trend-note">Dot size = leads that week; larger dots are more reliable.
+        Gaps are weeks with spend but no leads, where CPL is undefined
+        (shown as small markers on the baseline).</p>
+      <details class="trend-table"><summary>Weekly numbers</summary>
+        <table><thead><tr><th>Week of</th><th>Spend</th><th>Leads</th>
+        <th>CPL</th></tr></thead><tbody><tr><td>2026-05-05</td><td>$25.62</td><td>10</td><td>$2.56</td></tr><tr><td>2026-05-12</td><td>$10.28</td><td>2</td><td>$5.14</td></tr><tr><td>2026-05-19</td><td>$6.14</td><td>4</td><td>$1.53</td></tr><tr><td>2026-05-26</td><td>$2.13</td><td>1</td><td>$2.13</td></tr><tr><td>2026-06-02</td><td>$10.84</td><td>2</td><td>$5.42</td></tr><tr><td>2026-06-09</td><td>$3.72</td><td>2</td><td>$1.86</td></tr><tr><td>2026-06-16</td><td>$2.72</td><td>0</td><td>—</td></tr><tr><td>2026-06-23</td><td>$4.75</td><td>2</td><td>$2.38</td></tr><tr><td>2026-06-30</td><td>$0.17</td><td>0</td><td>—</td></tr></tbody></table>
+      </details>
+    </div>
   </div>
 
 </div>

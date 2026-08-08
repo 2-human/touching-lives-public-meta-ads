@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Give the Last First (Video) — Touching Lives Ad</title>
 <style>
 :root{--bg:#f0f2f5;--card:#fff;--text:#050505;--muted:#65676b;--border:#ced0d4;--brand:#1877f2;
@@ -114,6 +115,46 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .comments-section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px}
 .comments-section h2{margin:0 0 12px;font-size:16px}
 .comments-hint{color:var(--muted);font-size:13px;margin:0}
+
+/* ---- weekly cost-metric trend ---- */
+.trend{margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.trend h4{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}
+.trend-sub{text-transform:none;letter-spacing:0;font-weight:400;opacity:.8}
+.trend-empty{color:var(--muted);font-style:italic;font-size:13px;margin:0}
+.verdict{display:flex;gap:10px;align-items:flex-start;background:var(--stat-bg);
+  border:1px solid var(--border);border-left-width:3px;border-radius:6px;
+  padding:10px 12px;margin-bottom:12px;font-size:13px;line-height:1.45}
+.verdict .v-icon{font-size:14px;line-height:1.35}
+.v-detail{color:var(--muted)}
+.verdict.v-good{border-left-color:#006300} .verdict.v-good .v-icon{color:#006300}
+.verdict.v-bad{border-left-color:#d03b3b}  .verdict.v-bad .v-icon{color:#d03b3b}
+.verdict.v-none{border-left-color:var(--muted)} .verdict.v-none .v-icon{color:var(--muted)}
+.tchart{display:block;width:100%;height:auto;overflow:visible}
+.tchart .tg{stroke:var(--border);stroke-width:1}
+.tchart .tref{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4}
+.tchart .treft{fill:var(--muted);font-size:10px}
+.tchart .tyl{fill:var(--muted);font-size:10px;text-anchor:end}
+.tchart .txl{fill:var(--muted);font-size:10px}
+.tchart .tline{fill:none;stroke:#1877f2;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.tchart .tdot{fill:#1877f2;stroke:var(--stat-bg);stroke-width:2}
+.tchart .tzero{fill:none;stroke:var(--muted);stroke-width:1.5}
+.tchart .ttip{opacity:0;pointer-events:none;transition:opacity .12s}
+.tchart .ttip rect{fill:#050505;opacity:.92}
+.tchart .ttt{fill:#fff;font-size:10px}
+.tchart .ttt-h{font-weight:700;font-size:11px}
+.tchart .tpt:hover .ttip,.tchart .tpt:focus-within .ttip{opacity:1}
+.tchart .tpt{cursor:crosshair}
+.tchart .tpt:focus{outline:none}
+.tchart .tpt:focus-visible .tdot,.tchart .tpt:focus-visible .tzero{stroke:#050505;stroke-width:2}
+.tchart .thit{fill:transparent;pointer-events:all}
+.tchart .thit{fill:transparent;pointer-events:all}
+.trend-note{color:var(--muted);font-size:11.5px;line-height:1.5;margin:8px 0 0}
+.trend-table{margin-top:10px;font-size:12px}
+.trend-table summary{cursor:pointer;color:var(--brand);font-size:12px}
+.trend-table table{border-collapse:collapse;margin-top:8px;width:100%}
+.trend-table th,.trend-table td{border:1px solid var(--border);padding:4px 8px;text-align:right}
+.trend-table th:first-child,.trend-table td:first-child{text-align:left}
+.trend-table th{background:var(--stat-bg);color:var(--muted);font-weight:600}
 </style>
 </head><body>
 <div class="container">
@@ -176,11 +217,12 @@ header.page-hdr p{margin:0;color:var(--muted)}
     <h3>Lifetime performance (through 2026-08-08)</h3>
     
         <div class="metrics-grid">
-          <div class="metric-box"><div class="metric-value">$0.29</div><div class="metric-label">Lifetime spend</div></div>
+          <div class="metric-box"><div class="metric-value">$0.40</div><div class="metric-label">Lifetime spend</div></div>
           <div class="metric-box"><div class="metric-value">—</div><div class="metric-label">Leads generated</div></div>
           <div class="metric-box"><div class="metric-value ">—</div><div class="metric-label">Cost per lead</div></div>
           <div class="metric-box"><div class="metric-value">0.0%</div><div class="metric-label">Click-through rate</div></div>
         </div>
+    <div class="trend"><h4>Weekly CPL trend</h4><p class="trend-empty">This ad has taken spend but recorded no leads in any week, so CPL is undefined throughout. Total: $0.40 across 6 week(s).</p></div>
   </div>
 
 </div>

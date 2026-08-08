@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Choose Nineveh — Touching Lives Ad</title>
 <style>
 :root{--bg:#f0f2f5;--card:#fff;--text:#050505;--muted:#65676b;--border:#ced0d4;--brand:#1877f2;
@@ -114,6 +115,46 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .comments-section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px}
 .comments-section h2{margin:0 0 12px;font-size:16px}
 .comments-hint{color:var(--muted);font-size:13px;margin:0}
+
+/* ---- weekly cost-metric trend ---- */
+.trend{margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.trend h4{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}
+.trend-sub{text-transform:none;letter-spacing:0;font-weight:400;opacity:.8}
+.trend-empty{color:var(--muted);font-style:italic;font-size:13px;margin:0}
+.verdict{display:flex;gap:10px;align-items:flex-start;background:var(--stat-bg);
+  border:1px solid var(--border);border-left-width:3px;border-radius:6px;
+  padding:10px 12px;margin-bottom:12px;font-size:13px;line-height:1.45}
+.verdict .v-icon{font-size:14px;line-height:1.35}
+.v-detail{color:var(--muted)}
+.verdict.v-good{border-left-color:#006300} .verdict.v-good .v-icon{color:#006300}
+.verdict.v-bad{border-left-color:#d03b3b}  .verdict.v-bad .v-icon{color:#d03b3b}
+.verdict.v-none{border-left-color:var(--muted)} .verdict.v-none .v-icon{color:var(--muted)}
+.tchart{display:block;width:100%;height:auto;overflow:visible}
+.tchart .tg{stroke:var(--border);stroke-width:1}
+.tchart .tref{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4}
+.tchart .treft{fill:var(--muted);font-size:10px}
+.tchart .tyl{fill:var(--muted);font-size:10px;text-anchor:end}
+.tchart .txl{fill:var(--muted);font-size:10px}
+.tchart .tline{fill:none;stroke:#1877f2;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.tchart .tdot{fill:#1877f2;stroke:var(--stat-bg);stroke-width:2}
+.tchart .tzero{fill:none;stroke:var(--muted);stroke-width:1.5}
+.tchart .ttip{opacity:0;pointer-events:none;transition:opacity .12s}
+.tchart .ttip rect{fill:#050505;opacity:.92}
+.tchart .ttt{fill:#fff;font-size:10px}
+.tchart .ttt-h{font-weight:700;font-size:11px}
+.tchart .tpt:hover .ttip,.tchart .tpt:focus-within .ttip{opacity:1}
+.tchart .tpt{cursor:crosshair}
+.tchart .tpt:focus{outline:none}
+.tchart .tpt:focus-visible .tdot,.tchart .tpt:focus-visible .tzero{stroke:#050505;stroke-width:2}
+.tchart .thit{fill:transparent;pointer-events:all}
+.tchart .thit{fill:transparent;pointer-events:all}
+.trend-note{color:var(--muted);font-size:11.5px;line-height:1.5;margin:8px 0 0}
+.trend-table{margin-top:10px;font-size:12px}
+.trend-table summary{cursor:pointer;color:var(--brand);font-size:12px}
+.trend-table table{border-collapse:collapse;margin-top:8px;width:100%}
+.trend-table th,.trend-table td{border:1px solid var(--border);padding:4px 8px;text-align:right}
+.trend-table th:first-child,.trend-table td:first-child{text-align:left}
+.trend-table th{background:var(--stat-bg);color:var(--muted);font-weight:600}
 </style>
 </head><body>
 <div class="container">
@@ -201,11 +242,28 @@ header.page-hdr p{margin:0;color:var(--muted)}
     <h3>Lifetime performance (through 2026-08-08)</h3>
     
         <div class="metrics-grid">
-          <div class="metric-box"><div class="metric-value">$39.22</div><div class="metric-label">Lifetime spend</div></div>
+          <div class="metric-box"><div class="metric-value">$40.65</div><div class="metric-label">Lifetime spend</div></div>
           <div class="metric-box"><div class="metric-value">31</div><div class="metric-label">Leads generated</div></div>
-          <div class="metric-box"><div class="metric-value cpl-good">$1.27</div><div class="metric-label">Cost per lead</div></div>
-          <div class="metric-box"><div class="metric-value">10.4%</div><div class="metric-label">Click-through rate</div></div>
+          <div class="metric-box"><div class="metric-value cpl-good">$1.31</div><div class="metric-label">Cost per lead</div></div>
+          <div class="metric-box"><div class="metric-value">10.3%</div><div class="metric-label">Click-through rate</div></div>
         </div>
+    
+    <div class="trend">
+      <h4>Weekly CPL trend <span class="trend-sub">since this ad went live</span></h4>
+      <div class="verdict v-good"><span class="v-icon" aria-hidden="true">▲</span>
+        <span><strong>Trend worsening</strong><br><span class="v-detail">$1.40 over the last 3 weeks of delivery vs $0.83 before (+70%) · at or below the bar</span></span></div>
+      <svg class="tchart" viewBox="0 0 640 168" role="img"
+           aria-label="Weekly CPL for this ad against the $1.50 CPL cut line">
+        <line class="tg" x1="52" y1="138.0" x2="544" y2="138.0"/><text class="tyl" x="44" y="141.5">$0.00</text><line class="tg" x1="52" y1="76.0" x2="544" y2="76.0"/><text class="tyl" x="44" y="79.5">$1.25</text><line class="tg" x1="52" y1="14.0" x2="544" y2="14.0"/><text class="tyl" x="44" y="17.5">$2.50</text><line class="tref" x1="52" y1="63.6" x2="544" y2="63.6"/><text class="treft" x="552" y="67.1">$1.50 CPL cut line</text><polyline class="tline" points="52.0,105.6 150.4,36.3 248.8,61.0 347.2,84.3 445.6,111.0"/><g class="tpt" tabindex="0"><circle class="thit" cx="52.0" cy="105.6" r="14"/><circle class="tdot" cx="52.0" cy="105.6" r="5.5"/><title>2026-06-30: $0.65 · 7 leads · $4.57</title><g class="ttip"><rect x="62.0" y="51.61616000000001" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="70.0" y="66.61616000000001">2026-06-30</text><text class="ttt" x="70.0" y="79.61616000000001">$0.65 CPL</text><text class="ttt" x="70.0" y="92.61616000000001">7 leads · $4.57</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="150.4" cy="36.3" r="14"/><circle class="tdot" cx="150.4" cy="36.3" r="3.9"/><title>2026-07-07: $2.05 · 1 leads · $2.05</title><g class="ttip"><rect x="160.4" y="2" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="168.4" y="17">2026-07-07</text><text class="ttt" x="168.4" y="30">$2.05 CPL</text><text class="ttt" x="168.4" y="43">1 leads · $2.05</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="248.8" cy="61.0" r="14"/><circle class="tdot" cx="248.8" cy="61.0" r="7.0"/><title>2026-07-14: $1.55 · 18 leads · $27.94</title><g class="ttip"><rect x="258.8" y="7.01088" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="266.8" y="22.01088">2026-07-14</text><text class="ttt" x="266.8" y="35.01088">$1.55 CPL</text><text class="ttt" x="266.8" y="48.01088">18 leads · $27.94</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="347.2" cy="84.3" r="14"/><circle class="tdot" cx="347.2" cy="84.3" r="4.6"/><title>2026-07-21: $1.08 · 3 leads · $3.25</title><g class="ttip"><rect x="357.2" y="30.268320000000003" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="365.2" y="45.26832">2026-07-21</text><text class="ttt" x="365.2" y="58.26832">$1.08 CPL</text><text class="ttt" x="365.2" y="71.26832">3 leads · $3.25</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="445.6" cy="111.0" r="14"/><circle class="tdot" cx="445.6" cy="111.0" r="4.3"/><title>2026-07-28: $0.55 · 2 leads · $1.09</title><g class="ttip"><rect x="285.6" y="56.96799999999999" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="293.6" y="71.96799999999999">2026-07-28</text><text class="ttt" x="293.6" y="84.96799999999999">$0.55 CPL</text><text class="ttt" x="293.6" y="97.96799999999999">2 leads · $1.09</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="544.0" cy="138.0" r="14"/><circle class="tzero" cx="544.0" cy="138.0" r="3"/><title>2026-08-04: $1.75 spent, no leads — CPL undefined</title><g class="ttip"><rect x="384.0" y="84.0" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="392.0" y="99.0">2026-08-04</text><text class="ttt" x="392.0" y="112.0">CPL undefined</text><text class="ttt" x="392.0" y="125.0">0 leads · $1.75</text></g></g><text class="txl" x="52.0" y="158" text-anchor="start">2026-06-30</text><text class="txl" x="544.0" y="158" text-anchor="end">2026-08-04</text>
+      </svg>
+      <p class="trend-note">Dot size = leads that week; larger dots are more reliable.
+        Gaps are weeks with spend but no leads, where CPL is undefined
+        (shown as small markers on the baseline). The final week is partial (through 2026-08-08).</p>
+      <details class="trend-table"><summary>Weekly numbers</summary>
+        <table><thead><tr><th>Week of</th><th>Spend</th><th>Leads</th>
+        <th>CPL</th></tr></thead><tbody><tr><td>2026-06-30</td><td>$4.57</td><td>7</td><td>$0.65</td></tr><tr><td>2026-07-07</td><td>$2.05</td><td>1</td><td>$2.05</td></tr><tr><td>2026-07-14</td><td>$27.94</td><td>18</td><td>$1.55</td></tr><tr><td>2026-07-21</td><td>$3.25</td><td>3</td><td>$1.08</td></tr><tr><td>2026-07-28</td><td>$1.09</td><td>2</td><td>$0.55</td></tr><tr><td>2026-08-04</td><td>$1.75</td><td>0</td><td>—</td></tr></tbody></table>
+      </details>
+    </div>
   </div>
 
 </div>

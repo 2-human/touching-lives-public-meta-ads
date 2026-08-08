@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Is the Bible just a hype? — Touching Lives Reach Ad</title>
 <style>
 :root{--bg:#f0f2f5;--card:#fff;--text:#050505;--muted:#65676b;--border:#ced0d4;--brand:#1877f2;
@@ -114,6 +115,46 @@ header.page-hdr p{margin:0;color:var(--muted)}
 .comments-section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px}
 .comments-section h2{margin:0 0 12px;font-size:16px}
 .comments-hint{color:var(--muted);font-size:13px;margin:0}
+
+/* ---- weekly cost-metric trend ---- */
+.trend{margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.trend h4{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}
+.trend-sub{text-transform:none;letter-spacing:0;font-weight:400;opacity:.8}
+.trend-empty{color:var(--muted);font-style:italic;font-size:13px;margin:0}
+.verdict{display:flex;gap:10px;align-items:flex-start;background:var(--stat-bg);
+  border:1px solid var(--border);border-left-width:3px;border-radius:6px;
+  padding:10px 12px;margin-bottom:12px;font-size:13px;line-height:1.45}
+.verdict .v-icon{font-size:14px;line-height:1.35}
+.v-detail{color:var(--muted)}
+.verdict.v-good{border-left-color:#006300} .verdict.v-good .v-icon{color:#006300}
+.verdict.v-bad{border-left-color:#d03b3b}  .verdict.v-bad .v-icon{color:#d03b3b}
+.verdict.v-none{border-left-color:var(--muted)} .verdict.v-none .v-icon{color:var(--muted)}
+.tchart{display:block;width:100%;height:auto;overflow:visible}
+.tchart .tg{stroke:var(--border);stroke-width:1}
+.tchart .tref{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4}
+.tchart .treft{fill:var(--muted);font-size:10px}
+.tchart .tyl{fill:var(--muted);font-size:10px;text-anchor:end}
+.tchart .txl{fill:var(--muted);font-size:10px}
+.tchart .tline{fill:none;stroke:#1877f2;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.tchart .tdot{fill:#1877f2;stroke:var(--stat-bg);stroke-width:2}
+.tchart .tzero{fill:none;stroke:var(--muted);stroke-width:1.5}
+.tchart .ttip{opacity:0;pointer-events:none;transition:opacity .12s}
+.tchart .ttip rect{fill:#050505;opacity:.92}
+.tchart .ttt{fill:#fff;font-size:10px}
+.tchart .ttt-h{font-weight:700;font-size:11px}
+.tchart .tpt:hover .ttip,.tchart .tpt:focus-within .ttip{opacity:1}
+.tchart .tpt{cursor:crosshair}
+.tchart .tpt:focus{outline:none}
+.tchart .tpt:focus-visible .tdot,.tchart .tpt:focus-visible .tzero{stroke:#050505;stroke-width:2}
+.tchart .thit{fill:transparent;pointer-events:all}
+.tchart .thit{fill:transparent;pointer-events:all}
+.trend-note{color:var(--muted);font-size:11.5px;line-height:1.5;margin:8px 0 0}
+.trend-table{margin-top:10px;font-size:12px}
+.trend-table summary{cursor:pointer;color:var(--brand);font-size:12px}
+.trend-table table{border-collapse:collapse;margin-top:8px;width:100%}
+.trend-table th,.trend-table td{border:1px solid var(--border);padding:4px 8px;text-align:right}
+.trend-table th:first-child,.trend-table td:first-child{text-align:left}
+.trend-table th{background:var(--stat-bg);color:var(--muted);font-weight:600}
 </style>
 </head><body>
 <div class="container">
@@ -172,6 +213,23 @@ header.page-hdr p{margin:0;color:var(--muted)}
           <div class="metric-box"><div class="metric-value">$1.32</div><div class="metric-label">CPM-Reach</div></div>
           <div class="metric-box"><div class="metric-value">2,244</div><div class="metric-label">Video views</div></div>
         </div>
+    
+    <div class="trend">
+      <h4>Weekly CPM trend <span class="trend-sub">since this ad went live</span></h4>
+      <div class="verdict v-none"><span class="v-icon" aria-hidden="true">▬</span>
+        <span><strong>Too short a history for a trend</strong><br><span class="v-detail">$1.32 while it ran · above the bar</span></span></div>
+      <svg class="tchart" viewBox="0 0 640 168" role="img"
+           aria-label="Weekly CPM for this ad against the $1.27 ad-set avg">
+        <line class="tg" x1="52" y1="138.0" x2="544" y2="138.0"/><text class="tyl" x="44" y="141.5">$0.00</text><line class="tg" x1="52" y1="76.0" x2="544" y2="76.0"/><text class="tyl" x="44" y="79.5">$1.00</text><line class="tg" x1="52" y1="14.0" x2="544" y2="14.0"/><text class="tyl" x="44" y="17.5">$2.00</text><line class="tref" x1="52" y1="59.3" x2="544" y2="59.3"/><text class="treft" x="552" y="62.8">$1.27 ad-set avg</text><polyline class="tline" points="52.0,54.5 544.0,64.1"/><g class="tpt" tabindex="0"><circle class="thit" cx="52.0" cy="54.5" r="14"/><circle class="tdot" cx="52.0" cy="54.5" r="7.0"/><title>2026-06-28: $1.35 · 10,971 reach · $15.64</title><g class="ttip"><rect x="62.0" y="2" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="70.0" y="17">2026-06-28</text><text class="ttt" x="70.0" y="30">$1.35 CPM</text><text class="ttt" x="70.0" y="43">10,971 reach · $15.64</text></g></g><g class="tpt" tabindex="0"><circle class="thit" cx="544.0" cy="64.1" r="14"/><circle class="tdot" cx="544.0" cy="64.1" r="4.9"/><title>2026-07-05: $1.19 · 2,564 reach · $3.18</title><g class="ttip"><rect x="384.0" y="10.126999999999995" width="150" height="46" rx="4"/><text class="ttt ttt-h" x="392.0" y="25.126999999999995">2026-07-05</text><text class="ttt" x="392.0" y="38.126999999999995">$1.19 CPM</text><text class="ttt" x="392.0" y="51.126999999999995">2,564 reach · $3.18</text></g></g><text class="txl" x="52.0" y="158" text-anchor="start">2026-06-28</text><text class="txl" x="544.0" y="158" text-anchor="end">2026-07-05</text>
+      </svg>
+      <p class="trend-note">Dot size = reach that week; larger dots are more reliable.
+        Gaps are weeks with spend but no reach, where CPM is undefined
+        (shown as small markers on the baseline).</p>
+      <details class="trend-table"><summary>Weekly numbers</summary>
+        <table><thead><tr><th>Week of</th><th>Spend</th><th>Reach</th>
+        <th>CPM</th></tr></thead><tbody><tr><td>2026-06-28</td><td>$15.64</td><td>10,971</td><td>$1.35</td></tr><tr><td>2026-07-05</td><td>$3.18</td><td>2,564</td><td>$1.19</td></tr></tbody></table>
+      </details>
+    </div>
   </div>
 
   <!-- (Leave-feedback hint removed; entry button handles discoverability.) -->
